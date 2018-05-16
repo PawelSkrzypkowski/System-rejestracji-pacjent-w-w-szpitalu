@@ -22,8 +22,7 @@
 
 
     <div class="container mt-4 offset-2 col-8">
-
-        <form action="#" method="post" th:action="@{/register}">
+        <form id="registerUser" action="#" method="post" th:action="@{/register}">
             <div class="row">
                 <div class="col-6">
                     <input name="fullname" class="form-control" placeholder="Imię i nazwisko"/>
@@ -34,7 +33,9 @@
                     <input name="phone" class="form-control" placeholder="Numer telefonu"/>
                 </div>
                 <div class="col-6">
-                    <input name="province" class="form-control" placeholder="Województwo"/>
+                    <select name="province" class="form-control">
+                        <option th:each="instance : ${provinceMap}" th:value="${instance.key}" th:text="${instance.value}"></option>
+                    </select>
                     <input name="city" class="form-control" placeholder="Miasto"/>
                     <input name="street" class="form-control" placeholder="Ulica"/>
                     <input name="houseNumber" class="form-control" placeholder="Numer domu"/>
@@ -54,8 +55,8 @@
 
     </div>
 
-<script th:src="@{js/jquery.min.js}"></script>
-<script th:src="@{js/popper.min.js}"></script>
-<script th:src="@{js/bootstrap.min.js}"></script>
+    <script th:src="@{js/jquery.min.js}"></script>
+    <script th:src="@{js/popper.min.js}"></script>
+    <script th:src="@{js/bootstrap.min.js}"></script>
 </body>
 </html>

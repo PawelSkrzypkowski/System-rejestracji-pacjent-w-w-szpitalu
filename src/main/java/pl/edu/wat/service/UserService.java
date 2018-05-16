@@ -2,10 +2,13 @@ package pl.edu.wat.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.edu.wat.model.Address;
 import pl.edu.wat.model.User;
 import pl.edu.wat.model.UserRole;
+import pl.edu.wat.repository.AddressRepository;
 import pl.edu.wat.repository.UserRepository;
 import pl.edu.wat.repository.UserRoleRepository;
+import pl.edu.wat.web.RegisterView;
 
 /**
  * Created by Paweł Skrzypkowski
@@ -15,22 +18,27 @@ import pl.edu.wat.repository.UserRoleRepository;
 public class UserService{
 
     private static final String DEFAULT_ROLE = "ROLE_USER";
+
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
     private UserRoleRepository roleRepository;
 
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private AddressRepository addressRepository;
 
-    @Autowired
-    public void setRoleRepository(UserRoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
-
-    public void addWithDefaultRole(User user) {
+    public void addWithDefaultRole(RegisterView registerView) {
+        User user = User.builder().fullname(registerView.getFullname()).pesel(registerView.getPesel()).
+                login(registerView.getLogin()).password(registerView.getPassword()).email(registerView.getEmail()).
+                phone(registerView.getPhone()).doctorFullname(registerView.getDoctorFullname()).build();
+        Address address = Address.builder().provinceEnum(registerView.getProvince()).city(registerView.getCity()).
+                street(registerView.getStreet()).houseNumber(registerView.getHouseNumber()).
+                flatNumber(registerView.getFlatNumber()).build();
+        user.setAddress(address);
         UserRole defaultRole = roleRepository.findByRole(DEFAULT_ROLE);
         user.getRoles().add(defaultRole);
+        addressRepository.save(address);
         userRepository.save(user);
     }
 

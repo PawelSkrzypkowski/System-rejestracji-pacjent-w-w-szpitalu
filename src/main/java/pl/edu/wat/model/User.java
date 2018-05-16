@@ -1,5 +1,6 @@
 package pl.edu.wat.model;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,6 +23,7 @@ import java.util.Set;
 @Data
 @ToString
 @Entity
+@Builder
 public class User {
 
     @Id
@@ -28,10 +31,7 @@ public class User {
     private Long id;
 
     @NotEmpty
-    private String firstName;
-
-    @NotEmpty
-    private String lastName;
+    private String fullname;
 
     @NotEmpty
     private String email;
@@ -42,14 +42,21 @@ public class User {
     @NotEmpty
     private String password;
 
+    @NotEmpty
     private String pesel;
 
+    @NotEmpty
     private String phone;
 
     private String job;
 
     private String specialization;
 
+    private String doctorFullname;
+
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<UserRole> roles = new HashSet<>();
+
+    @OneToOne
+    private Address address;
 }
