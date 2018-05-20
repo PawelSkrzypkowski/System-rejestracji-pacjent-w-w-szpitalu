@@ -13,11 +13,11 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
+        <ul class="nav navbar-nav">
             Tu jakieś linki :)
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-            <a th:href="@{/login?logout}">Wyloguj się</a>
+        </ul>
+        <ul class="nav navbar-nav navbar-right pull-right">
+            <a th:href="@{/login?logout}" class="nav-item nav-link">Wyloguj się</a>
         </ul>
     </div>
 </nav>
