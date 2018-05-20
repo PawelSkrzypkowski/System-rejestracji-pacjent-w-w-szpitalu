@@ -10,6 +10,8 @@ import pl.edu.wat.repository.UserRepository;
 import pl.edu.wat.repository.UserRoleRepository;
 import pl.edu.wat.web.RegisterView;
 
+import java.util.LinkedHashSet;
+
 /**
  * Created by Paweł Skrzypkowski
  * Wojskowa Akademia Techniczna im. Jarosława Dąbrowskiego, Warszawa 2018.
@@ -31,14 +33,14 @@ public class UserService{
     public void addWithDefaultRole(RegisterView registerView) {
         User user = User.builder().fullname(registerView.getFullname()).pesel(registerView.getPesel()).
                 login(registerView.getLogin()).password(registerView.getPassword()).email(registerView.getEmail()).
-                phone(registerView.getPhone()).doctorFullname(registerView.getDoctorFullname()).build();
+                phone(registerView.getPhone()).doctorFullname(registerView.getDoctorFullname()).roles(new LinkedHashSet<>()).build();
         Address address = Address.builder().provinceEnum(registerView.getProvince()).city(registerView.getCity()).
                 street(registerView.getStreet()).houseNumber(registerView.getHouseNumber()).
                 flatNumber(registerView.getFlatNumber()).build();
-        user.setAddress(address);
+        Address savedAddress = addressRepository.save(address);
+        user.setAddress(savedAddress);
         UserRole defaultRole = roleRepository.findByRole(DEFAULT_ROLE);
         user.getRoles().add(defaultRole);
-        addressRepository.save(address);
         userRepository.save(user);
     }
 

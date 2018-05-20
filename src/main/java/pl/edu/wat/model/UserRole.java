@@ -1,8 +1,6 @@
 package pl.edu.wat.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +13,7 @@ import javax.persistence.Id;
 @Data
 @Entity
 @ToString
-@Builder
+@NoArgsConstructor
 public class UserRole {
 
     @Id
@@ -23,4 +21,11 @@ public class UserRole {
     private Long id;
     private String role;
     private String description;
+
+    @Builder
+    protected UserRole(Long id,String role, String description) {
+        this.id = id;
+        this.role = role;
+        this.description = description;
+    }
 }

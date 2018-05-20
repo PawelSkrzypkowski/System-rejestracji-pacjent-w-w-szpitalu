@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Bootstrap Example</title>
+    <title>System rejestracji pacjentów w szpitalu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-item nav-link active" href="#">Rejestracja <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" th:href="@{/login}">Logowanie</a>
+                <a id="loginPage" class="nav-item nav-link" th:href="@{/login}">Logowanie</a>
             </div>
         </div>
     </nav>
@@ -29,7 +29,7 @@
                     <input name="pesel" class="form-control" placeholder="Pesel"/>
                     <input name="email" class="form-control" placeholder="E-mail(opcjonalnie)"/>
                     <input name="login" class="form-control" placeholder="Login"/>
-                    <input name="password" class="form-control" placeholder="Hasło"/>
+                    <input name="password" type="password" class="form-control" placeholder="Hasło"/>
                     <input name="phone" class="form-control" placeholder="Numer telefonu"/>
                 </div>
                 <div class="col-6">

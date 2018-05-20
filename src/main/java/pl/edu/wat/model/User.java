@@ -1,8 +1,6 @@
 package pl.edu.wat.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -23,7 +21,7 @@ import java.util.Set;
 @Data
 @ToString
 @Entity
-@Builder
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -59,4 +57,20 @@ public class User {
 
     @OneToOne
     private Address address;
+
+    @Builder
+    protected User(String fullname, String email, String login, String password, String pesel, String phone, String job, String specialization, String doctorFullname, Set<UserRole> roles, Address address) {
+        this.id = id;
+        this.fullname = fullname;
+        this.email = email;
+        this.login = login;
+        this.password = password;
+        this.pesel = pesel;
+        this.phone = phone;
+        this.job = job;
+        this.specialization = specialization;
+        this.doctorFullname = doctorFullname;
+        this.roles = roles;
+        this.address = address;
+    }
 }

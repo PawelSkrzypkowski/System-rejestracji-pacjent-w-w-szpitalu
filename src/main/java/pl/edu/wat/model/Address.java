@@ -1,8 +1,6 @@
 package pl.edu.wat.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import pl.edu.wat.model.enums.ProvinceEnum;
 
 import javax.persistence.Entity;
@@ -10,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Paweł Skrzypkowski
@@ -18,13 +17,13 @@ import javax.validation.constraints.NotEmpty;
 @Data
 @ToString
 @Entity
-@Builder
+@NoArgsConstructor
 public class Address{
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        @NotEmpty
+        @NotNull
         Integer houseNumber;
 
         Integer flatNumber;
@@ -35,6 +34,16 @@ public class Address{
         @NotEmpty
         String city;
 
-        @NotEmpty
+        @NotNull
         ProvinceEnum provinceEnum;
+
+        @Builder
+        protected Address(Long id, Integer houseNumber, Integer flatNumber, String street, String city, ProvinceEnum provinceEnum) {
+                this.id = id;
+                this.houseNumber = houseNumber;
+                this.flatNumber = flatNumber;
+                this.street = street;
+                this.city = city;
+                this.provinceEnum = provinceEnum;
+        }
 }
