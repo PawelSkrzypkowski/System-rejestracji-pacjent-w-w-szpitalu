@@ -17,7 +17,6 @@ public class MainController {
     }
 
     @RequestMapping("/main")
-    @ResponseBody
     public String secured() {
         return "main";
     }
