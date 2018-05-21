@@ -1,0 +1,4 @@
+id,description,role
+1,"Rola dla pacjenta",ROLE_USER
+2,"Rola dla lekarza",ROLE_DOCTOR
+3,"Rola dla administratora",ROLE_ADMIN

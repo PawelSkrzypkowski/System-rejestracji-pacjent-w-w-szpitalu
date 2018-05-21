@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Paweł
+      changes:
+        - loadData:
+            tableName: user_role
+            file: user_roles.csv
+            encoding: UTF-8
+            relativeToChangelogFile: true
+            quotchar: '"'
