@@ -1,17 +1,15 @@
 package pl.edu.wat.web;
 
 import lombok.Data;
-import pl.edu.wat.model.enums.ProvinceEnum;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 /**
  * Created by Paweł Skrzypkowski
  * Wojskowa Akademia Techniczna im. Jarosława Dąbrowskiego, Warszawa 2018.
  */
 @Data
-public class RegisterView {
+public class DoctorRegisterView {
     @NotEmpty
     private String fullname;
     @NotEmpty
@@ -24,15 +22,8 @@ public class RegisterView {
     private String password;
     @NotEmpty
     private String phone;
-    @NotNull
-    private ProvinceEnum province;
     @NotEmpty
-    private String city;
+    private String job;
     @NotEmpty
-    private String street;
-    @NotNull
-    private Integer houseNumber;
-    private Integer flatNumber;
-    @NotEmpty
-    private String doctorFullname;
+    private String specialization;
 }

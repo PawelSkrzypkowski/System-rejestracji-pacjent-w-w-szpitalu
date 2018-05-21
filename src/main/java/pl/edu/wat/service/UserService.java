@@ -9,6 +9,7 @@ import pl.edu.wat.model.UserRole;
 import pl.edu.wat.repository.AddressRepository;
 import pl.edu.wat.repository.UserRepository;
 import pl.edu.wat.repository.UserRoleRepository;
+import pl.edu.wat.web.DoctorRegisterView;
 import pl.edu.wat.web.RegisterView;
 
 import java.util.LinkedHashSet;
@@ -21,6 +22,7 @@ import java.util.LinkedHashSet;
 public class UserService{
 
     private static final String DEFAULT_ROLE = "ROLE_USER";
+    private static final String DOCTOR_ROLE = "ROLE_DOCTOR";
 
     @Autowired
     private UserRepository userRepository;
@@ -48,4 +50,12 @@ public class UserService{
         userRepository.save(user);
     }
 
+    public void addWithDoctorRole(DoctorRegisterView registerView) {
+        User user = User.builder().fullname(registerView.getFullname()).pesel(registerView.getPesel()).
+                login(registerView.getLogin()).password(passwordEncoder.encode(registerView.getPassword())).email(registerView.getEmail()).
+                phone(registerView.getPhone()).roles(new LinkedHashSet<>()).job(registerView.getJob()).specialization(registerView.getSpecialization()).build();
+        UserRole doctorRole = roleRepository.findByRole(DOCTOR_ROLE);
+        user.getRoles().add(doctorRole);
+        userRepository.save(user);
+    }
 }

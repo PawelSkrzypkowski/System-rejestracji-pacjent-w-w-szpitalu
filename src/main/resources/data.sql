@@ -1,1 +1,0 @@
-insert into user_role(id, role, description) VALUES (1, "ROLE_USER", "Rola dla pacjenta");
