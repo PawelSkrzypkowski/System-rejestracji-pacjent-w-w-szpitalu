@@ -3,6 +3,10 @@ package pl.edu.wat.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import pl.edu.wat.exception.NotFoundException;
 import pl.edu.wat.model.Address;
 import pl.edu.wat.model.User;
 import pl.edu.wat.model.UserRole;
@@ -67,7 +71,16 @@ public class UserService{
 
     public List<User> getAllStaff(){
         List<User> staff = new ArrayList<>();
-        userRepository.findAll().stream().filter(s -> s.getJob()!=null).forEach(staff::add);
+        userRepository.findAll().stream().filter(s -> s.getSpecialization()!=null).forEach(staff::add);
         return staff;
+    }
+
+    public List<Visit> getDoctorSchedule(Long id){
+        List<Visit> visits = userRepository.findById(id).get().getVisits();
+        return visits;
+    }
+
+    public User findUser(Long id){
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException());
     }
 }

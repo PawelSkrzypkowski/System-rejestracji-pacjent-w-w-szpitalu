@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.edu.wat.model.User;
 import pl.edu.wat.model.enums.ProvinceEnum;
 import pl.edu.wat.repository.UserRepository;
@@ -66,5 +63,12 @@ public class UserController {
     @GetMapping("/login")
     public String login() {
         return "loginPage";
+    }
+
+    @GetMapping("/details")
+    public String staffDetails(@RequestParam long id, Model model){
+        model.addAttribute("doctor", userService.findUser(id));
+        model.addAttribute("visits", userService.getDoctorSchedule(id));
+        return "visit/doctorSchedule";
     }
 }

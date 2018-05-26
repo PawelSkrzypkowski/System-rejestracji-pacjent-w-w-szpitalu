@@ -23,15 +23,15 @@ public class Visit {
 
     private String description;
 
-    @NotEmpty
     private LocalDateTime visitDate;
 
     private boolean busyVisit=false;
 
     private int officeNumber;
 
+
     @Builder
-    protected Visit(Long id, String description, LocalDateTime visitDate, boolean busyVisit, int officeNumber) {
+    public Visit(Long id, String description, LocalDateTime visitDate, boolean busyVisit, int officeNumber) {
         this.id = id;
         this.description = description;
         this.visitDate = visitDate;

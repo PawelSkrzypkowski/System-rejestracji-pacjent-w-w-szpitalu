@@ -52,7 +52,7 @@ public class User {
     @OneToOne
     private Address address;
 
-    @OneToMany(cascade = {CascadeType.PERSIST})
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<Visit> visits;
 
     @Builder

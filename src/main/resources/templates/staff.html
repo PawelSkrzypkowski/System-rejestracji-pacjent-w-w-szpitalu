@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Personel</title>
@@ -7,21 +7,28 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 
 <body>
 
-<div role="navigation">
-    <div class="navbar navbar-inverse">
-        <a href="/" class="navbar-brand">Szpital</a>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="staff">Lekarze</a></li>
-                <li><a href="visits">Wizyty</a></li>
-            </ul>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">System rejestracji pacjentów w szpitalu</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="nav navbar-nav">
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/registerPersonnel}" class="nav-item nav-link" href="#">Rejestracja personelu</a>
         </div>
+        <ul class="nav navbar-nav navbar-right">
+            <a th:href="@{/logout}" class="nav-item nav-link">Wyloguj się</a>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <a th:href="@{/staff}" class="nav-item nav-link">Personel</a>
+        </ul>
     </div>
-</div>
+</nav>
 
 <h3 style="text-align:center">Personel</h3>
 <hr>
