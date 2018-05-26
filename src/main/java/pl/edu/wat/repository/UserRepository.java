@@ -2,6 +2,9 @@ package pl.edu.wat.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import pl.edu.wat.model.User;
+import pl.edu.wat.model.Visit;
+
+import java.util.List;
 
 /**
  * Created by Paweł Skrzypkowski

@@ -14,6 +14,8 @@ import pl.edu.wat.model.Visit;
 import pl.edu.wat.repository.AddressRepository;
 import pl.edu.wat.repository.UserRepository;
 import pl.edu.wat.repository.UserRoleRepository;
+import pl.edu.wat.repository.VisitRepository;
+import pl.edu.wat.security.UserDetailsProvider;
 import pl.edu.wat.web.DoctorRegisterView;
 import pl.edu.wat.web.RegisterView;
 
@@ -36,6 +38,9 @@ public class UserService{
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private VisitRepository visitRepository;
 
     @Autowired
     private UserRoleRepository roleRepository;
@@ -76,7 +81,8 @@ public class UserService{
     }
 
     public List<Visit> getDoctorSchedule(Long id){
-        List<Visit> visits = userRepository.findById(id).get().getVisits();
+        List<Visit> visits = new ArrayList<>();
+        userRepository.findById(id).get().getVisits().stream().filter(s-> (s.getVisitDate().isAfter(LocalDateTime.now())==true)).forEach(visits::add);
         return visits;
     }
 
@@ -96,5 +102,27 @@ public class UserService{
             }
         }
         return null;
+    }
+
+    public List<Visit> getHistoricalVisits(){
+        List<Visit> visits = new ArrayList<>();
+        User user = userRepository.findByLogin(UserDetailsProvider.getCurrentUserUsername());
+
+        for(Visit visit:user.getVisits())
+            if(visit.getVisitDate().isBefore(LocalDateTime.now()))
+                visits.add(visit);
+
+        return visits;
+    }
+
+    public List<Visit> getFutureVisits(){
+        List<Visit> visits = new ArrayList<>();
+        User user = userRepository.findByLogin(UserDetailsProvider.getCurrentUserUsername());
+
+        for(Visit visit:user.getVisits())
+            if(visit.getVisitDate().isAfter(LocalDateTime.now()) && visit.isBusyVisit())
+                visits.add(visit);
+
+        return visits;
     }
 }

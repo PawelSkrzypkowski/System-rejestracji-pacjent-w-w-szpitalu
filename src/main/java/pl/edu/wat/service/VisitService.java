@@ -9,6 +9,11 @@ import pl.edu.wat.repository.UserRepository;
 import pl.edu.wat.repository.VisitRepository;
 import pl.edu.wat.security.UserDetailsProvider;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class VisitService {
 
@@ -35,5 +40,14 @@ public class VisitService {
         visitRepository.save(visit);
 
         return true;
+    }
+
+    public void releaseVisit(long id){
+        Visit visit = visitRepository.findById(id).orElseThrow(()->new NotFoundException());
+        User user = userRepository.findByLogin(UserDetailsProvider.getCurrentUserUsername());
+        user.getVisits().remove(visit);
+        userRepository.save(user);
+        visit.setBusyVisit(false);
+        visitRepository.save(visit);
     }
 }

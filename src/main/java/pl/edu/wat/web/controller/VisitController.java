@@ -34,4 +34,17 @@ public class VisitController {
             return "visit/confirmVisitError";
         }
     }
+
+    @GetMapping("/visits")
+    public String getVisits(Model model){
+        model.addAttribute("historicalVisits", userService.getHistoricalVisits());
+        model.addAttribute("futureVisits", userService.getFutureVisits());
+        return "visit/userVisits";
+    }
+
+    @GetMapping("/release")
+    public String releaseVisit(@RequestParam long id,Model model){
+        visitService.releaseVisit(id);
+        return getVisits(model);
+    }
 }
