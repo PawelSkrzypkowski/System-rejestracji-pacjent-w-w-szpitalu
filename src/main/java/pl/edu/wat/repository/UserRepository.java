@@ -10,4 +10,6 @@ import pl.edu.wat.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
     User findByLogin(String login);
+
+    User findByPesel(String pesel);
 }

@@ -20,7 +20,7 @@
                href="#">Rejestracja personelu</a>
         </div>
         <div class="nav navbar-nav">
-            <a sec:authorize="hasRole('DOCTOR')" th:href="@{/card/}" class="nav-item nav-link" href="#">Wyszukiwanie
+            <a sec:authorize="hasRole('DOCTOR')" th:href="@{/card/}" class="nav-item nav-link" href="#">Karta
                 pacjenta</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
@@ -28,35 +28,6 @@
         </ul>
     </div>
 </nav>
-
-
-<div class="container mt-4 offset-2 col-8">
-    <form id="registerUser" action="#" method="post" th:action="@{/admin/registerPersonnel}">
-        <div class="row">
-            <div class="col-6">
-                <input name="fullname" class="form-control" placeholder="Imię i nazwisko"/>
-                <input name="pesel" class="form-control" placeholder="Pesel"/>
-                <input name="email" class="form-control" placeholder="E-mail(opcjonalnie)"/>
-                <input name="login" class="form-control" placeholder="Login"/>
-                <input name="password" type="password" class="form-control" placeholder="Hasło"/>
-                <input name="phone" class="form-control" placeholder="Numer telefonu"/>
-            </div>
-            <div class="col-6">
-                <input name="job" class="form-control" placeholder="Zawód"/>
-                <input name="specialization" class="form-control" placeholder="Specjalizacja"/>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-6">
-                <a th:href="@{/main}" class="btn btn-secondary">Anuluj</a>
-            </div>
-            <div class="col-6">
-                <input type="submit" class="btn btn-dark" value="Zatwierdź"/>
-            </div>
-        </div>
-    </form>
-
-</div>
 
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>

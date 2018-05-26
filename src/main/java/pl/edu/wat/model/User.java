@@ -2,16 +2,11 @@ package pl.edu.wat.model;
 
 import lombok.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -57,6 +52,9 @@ public class User {
 
     @OneToOne
     private Address address;
+
+    @OneToMany
+    private List<Disease> diseases = new ArrayList<>();
 
     @Builder
     protected User(String fullname, String email, String login, String password, String pesel, String phone, String job, String specialization, String doctorFullname, Set<UserRole> roles, Address address) {
