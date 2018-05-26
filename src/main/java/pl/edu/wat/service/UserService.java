@@ -6,13 +6,19 @@ import org.springframework.stereotype.Service;
 import pl.edu.wat.model.Address;
 import pl.edu.wat.model.User;
 import pl.edu.wat.model.UserRole;
+import pl.edu.wat.model.Visit;
 import pl.edu.wat.repository.AddressRepository;
 import pl.edu.wat.repository.UserRepository;
 import pl.edu.wat.repository.UserRoleRepository;
 import pl.edu.wat.web.DoctorRegisterView;
 import pl.edu.wat.web.RegisterView;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 /**
  * Created by Paweł Skrzypkowski
@@ -57,5 +63,11 @@ public class UserService{
         UserRole doctorRole = roleRepository.findByRole(DOCTOR_ROLE);
         user.getRoles().add(doctorRole);
         userRepository.save(user);
+    }
+
+    public List<User> getAllStaff(){
+        List<User> staff = new ArrayList<>();
+        userRepository.findAll().stream().filter(s -> s.getJob()!=null).forEach(staff::add);
+        return staff;
     }
 }

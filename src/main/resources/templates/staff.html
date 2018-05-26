@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Personel</title>
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+
+<body>
+
+<div role="navigation">
+    <div class="navbar navbar-inverse">
+        <a href="/" class="navbar-brand">Szpital</a>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="staff">Lekarze</a></li>
+                <li><a href="visits">Wizyty</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<h3 style="text-align:center">Personel</h3>
+<hr>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <table class="table table-hover" id="dev-table">
+                    <tr>
+                        <th>#</th>
+                        <th>Imię i Nazwisko</th>
+                        <th></th>
+                    </tr>
+                    <tr th:each="doctor,iter: ${doctors}" th:object="${doctor}">
+                        <td th:text="${iter.index+1}"></td>
+                        <td th:text="*{fullname}"></td>
+                        <td><a th:href="@{details(id=*{id})}"><span class='glyphicon glyphicon-eye-open' ></span></a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

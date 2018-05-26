@@ -2,16 +2,10 @@ package pl.edu.wat.model;
 
 import lombok.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -58,8 +52,11 @@ public class User {
     @OneToOne
     private Address address;
 
+    @OneToMany(cascade = {CascadeType.PERSIST})
+    private List<Visit> visits;
+
     @Builder
-    protected User(String fullname, String email, String login, String password, String pesel, String phone, String job, String specialization, String doctorFullname, Set<UserRole> roles, Address address) {
+    protected User(String fullname, String email, String login, String password, String pesel, String phone, String job, String specialization, String doctorFullname, Set<UserRole> roles, Address address, List<Visit> visits) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
@@ -72,5 +69,6 @@ public class User {
         this.doctorFullname = doctorFullname;
         this.roles = roles;
         this.address = address;
+        this.visits=visits;
     }
 }

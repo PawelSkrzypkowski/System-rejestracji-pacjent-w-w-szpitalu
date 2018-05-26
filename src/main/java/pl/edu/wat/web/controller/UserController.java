@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import pl.edu.wat.model.User;
 import pl.edu.wat.model.enums.ProvinceEnum;
 import pl.edu.wat.repository.UserRepository;
@@ -54,6 +55,12 @@ public class UserController {
             userService.addWithDefaultRole(registerView);
             return "register/registerSuccess";
         }
+    }
+
+    @RequestMapping("/staff")
+    public String staff(Model model){
+        model.addAttribute("doctors",userService.getAllStaff());
+        return "staff";
     }
 
     @GetMapping("/login")
