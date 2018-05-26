@@ -8,25 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">System rejestracji pacjentów w szpitalu</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="nav navbar-nav">
-            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/registerPersonnel}" class="nav-item nav-link"
-               href="#">Rejestracja personelu</a>
-        </div>
-        <div class="nav navbar-nav">
-            <a sec:authorize="hasRole('DOCTOR')" th:href="@{/card/}" class="nav-item nav-link" href="#">Wyszukiwanie
-                pacjenta</a>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-            <a th:href="@{/logout}" class="nav-item nav-link">Wyloguj się</a>
-        </ul>
-    </div>
+<nav th:replace="header :: header">
 </nav>
 
 
