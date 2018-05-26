@@ -83,4 +83,18 @@ public class UserService{
     public User findUser(Long id){
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException());
     }
+
+    public User findUser(String userName){
+        return userRepository.findByLogin(userName);
+    }
+
+    public User getDoctorByVisit(Long id){
+        for(User user: userRepository.findAll()){
+            for(Visit visit: user.getVisits()){
+                if(visit.getId()==id)
+                    return user;
+            }
+        }
+        return null;
+    }
 }

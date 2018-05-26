@@ -8,10 +8,9 @@ import pl.edu.wat.exception.NotFoundException;
 
 @ControllerAdvice
 class GlobalControllerExceptionHandler {
-    //TODO obsluga 404 , na koniec odkomentować
-//    @ResponseStatus(HttpStatus.NOT_FOUND)
-//    @ExceptionHandler(NotFoundException.class)
-//    public String handleConflict() {
-//        return "visit/notFound";
-//    }
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public String handleConflict() {
+        return "visit/notFound";
+    }
 }

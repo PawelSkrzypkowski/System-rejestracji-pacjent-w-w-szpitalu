@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @RequestMapping("/staff")
-    public String staff(Model model){
+    public String getStaff(Model model){
         model.addAttribute("doctors",userService.getAllStaff());
         return "staff";
     }
@@ -66,7 +66,7 @@ public class UserController {
     }
 
     @GetMapping("/details")
-    public String staffDetails(@RequestParam long id, Model model){
+    public String getDoctorSchedule(@RequestParam long id, Model model){
         model.addAttribute("doctor", userService.findUser(id));
         model.addAttribute("visits", userService.getDoctorSchedule(id));
         return "visit/doctorSchedule";

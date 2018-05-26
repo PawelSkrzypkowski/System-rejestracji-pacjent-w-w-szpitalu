@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Wizyta</title>
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+
+<body>
+
+<div role="navigation">
+    <div class="navbar navbar-inverse">
+        <a href="/" class="navbar-brand">Szpital</a>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="staff">Lekarze</a></li>
+                <li><a href="visits">Wizyty</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="main-content">
+    <div class="container" align="center">
+        <h3 class="site-title">Coś poszło nie tak !</h3>
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div class="row">
+                    <div class="panel" style="background-color:gray;">
+                        <div class=" panel-body ">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <div class=" clearfix">
+                                    <div class="alert alert-danger">
+                                        Wystąpił problem !
+                                    </div>
+                                    <a class="btn icon-btn btn-primary" th:href="@{details(id=${doctor.id})}"><span class="glyphicon btn-glyphicon glyphicon glyphicon-arrow-left img-circle text-success"></span>Powrot</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
