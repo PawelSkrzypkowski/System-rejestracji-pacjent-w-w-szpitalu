@@ -1,8 +1,10 @@
 package pl.edu.wat.web;
 
 import lombok.Data;
+import pl.edu.wat.model.enums.JobEnum;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Paweł Skrzypkowski
@@ -22,8 +24,8 @@ public class DoctorRegisterView {
     private String password;
     @NotEmpty
     private String phone;
-    @NotEmpty
-    private String job;
+    @NotNull
+    private JobEnum job;
     @NotEmpty
     private String specialization;
 }

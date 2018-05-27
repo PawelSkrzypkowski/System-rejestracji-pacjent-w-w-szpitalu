@@ -35,6 +35,7 @@ public class UserService{
 
     private static final String DEFAULT_ROLE = "ROLE_USER";
     private static final String DOCTOR_ROLE = "ROLE_DOCTOR";
+    private static final String NURSE_ROLE = "ROLE_NURSE";
 
     @Autowired
     private UserRepository userRepository;
@@ -115,14 +116,23 @@ public class UserService{
         return visits;
     }
 
-    public List<Visit> getFutureVisits(){
+    public List<Visit> getFutureVisits() {
         List<Visit> visits = new ArrayList<>();
         User user = userRepository.findByLogin(UserDetailsProvider.getCurrentUserUsername());
 
-        for(Visit visit:user.getVisits())
-            if(visit.getVisitDate().isAfter(LocalDateTime.now()) && visit.isBusyVisit())
+        for (Visit visit : user.getVisits())
+            if (visit.getVisitDate().isAfter(LocalDateTime.now()) && visit.isBusyVisit())
                 visits.add(visit);
 
         return visits;
+    }
+
+    public void addWithNurseRole(DoctorRegisterView registerView) {
+        User user = User.builder().fullname(registerView.getFullname()).pesel(registerView.getPesel()).
+                login(registerView.getLogin()).password(passwordEncoder.encode(registerView.getPassword())).email(registerView.getEmail()).
+                phone(registerView.getPhone()).roles(new LinkedHashSet<>()).job(registerView.getJob()).specialization(registerView.getSpecialization()).build();
+        UserRole doctorRole = roleRepository.findByRole(NURSE_ROLE);
+        user.getRoles().add(doctorRole);
+        userRepository.save(user);
     }
 }

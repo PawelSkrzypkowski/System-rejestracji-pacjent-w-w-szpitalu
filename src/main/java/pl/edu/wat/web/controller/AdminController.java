@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.edu.wat.model.User;
+import pl.edu.wat.model.enums.JobEnum;
 import pl.edu.wat.model.enums.ProvinceEnum;
 import pl.edu.wat.repository.UserRepository;
 import pl.edu.wat.service.UserService;
@@ -36,11 +37,11 @@ public class AdminController {
 
     @GetMapping("/registerPersonnel")
     public String register(Model model) {
-        Map<ProvinceEnum, String> provinceMap = new HashMap<>();
-        Arrays.stream(ProvinceEnum.values()).forEach(e -> {
-            provinceMap.put(e, ProvinceEnum.getValue(e));
+        Map<JobEnum, String> jobMap = new HashMap<>();
+        Arrays.stream(JobEnum.values()).forEach(e -> {
+            jobMap.put(e, JobEnum.getValue(e));
         });
-        model.addAttribute("provinceMap", provinceMap);
+        model.addAttribute("jobMap", jobMap);
         return "register/registerDoctor";
     }
 
@@ -54,7 +55,10 @@ public class AdminController {
             if (user != null) {
                 return "register/registerDoctorError";
             }
-            userService.addWithDoctorRole(registerView);
+            if(registerView.getJob().equals(JobEnum.DOCTOR))
+                userService.addWithDoctorRole(registerView);
+            else
+                userService.addWithNurseRole(registerView);
             return "register/registerDoctorSuccess";
         }
     }

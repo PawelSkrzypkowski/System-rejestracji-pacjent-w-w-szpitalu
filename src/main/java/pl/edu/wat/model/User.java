@@ -1,6 +1,7 @@
 package pl.edu.wat.model;
 
 import lombok.*;
+import pl.edu.wat.model.enums.JobEnum;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -40,7 +41,7 @@ public class User {
     @NotEmpty
     private String phone;
 
-    private String job;
+    private JobEnum job;
 
     private String specialization;
 
@@ -56,7 +57,7 @@ public class User {
     private List<Visit> visits;
 
     @Builder
-    protected User(String fullname, String email, String login, String password, String pesel, String phone, String job, String specialization, String doctorFullname, Set<UserRole> roles, Address address, List<Visit> visits) {
+    protected User(String fullname, String email, String login, String password, String pesel, String phone, JobEnum job, String specialization, String doctorFullname, Set<UserRole> roles, Address address, List<Visit> visits) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;

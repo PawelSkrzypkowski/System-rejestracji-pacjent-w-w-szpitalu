@@ -16,6 +16,7 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="nav navbar-nav">
             <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/registerPersonnel}" class="nav-item nav-link" href="#">Rejestracja personelu</a>
+            <a sec:authorize="hasRole('DOCTOR')" th:href="@{/doctor/patientList}" class="nav-item nav-link" href="#">Wykaz pacjentów</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
             <a th:href="@{/logout}" class="nav-item nav-link">Wyloguj się</a>
@@ -36,7 +37,9 @@
                 <input name="phone" class="form-control" placeholder="Numer telefonu"/>
             </div>
             <div class="col-6">
-                <input name="job" class="form-control" placeholder="Zawód"/>
+                <select name="job" class="form-control">
+                    <option th:each="job : ${jobMap}" th:value="${job.key}" th:text="${job.value}"></option>
+                </select>
                 <input name="specialization" class="form-control" placeholder="Specjalizacja"/>
             </div>
         </div>
