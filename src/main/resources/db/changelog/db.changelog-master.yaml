@@ -1,5 +1,0 @@
-databaseChangeLog:
-  # All dictionaries and constants
-  - include:
-      relativeToChangelogFile: true
-      file: changes/user_roles.yml

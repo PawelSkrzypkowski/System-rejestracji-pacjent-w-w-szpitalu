@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
+
 <nav th:replace="header :: header">
 </nav>
 
@@ -24,7 +25,9 @@
                 <input name="phone" class="form-control" placeholder="Numer telefonu"/>
             </div>
             <div class="col-6">
-                <input name="job" class="form-control" placeholder="Zawód"/>
+                <select name="job" class="form-control">
+                    <option th:each="job : ${jobMap}" th:value="${job.key}" th:text="${job.value}"></option>
+                </select>
                 <input name="specialization" class="form-control" placeholder="Specjalizacja"/>
             </div>
         </div>
