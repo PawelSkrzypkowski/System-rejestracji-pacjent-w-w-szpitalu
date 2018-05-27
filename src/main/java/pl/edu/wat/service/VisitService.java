@@ -2,6 +2,8 @@ package pl.edu.wat.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import pl.edu.wat.exception.NotFoundException;
 import pl.edu.wat.model.User;
 import pl.edu.wat.model.Visit;
@@ -34,11 +36,9 @@ public class VisitService {
         if(user==null)
             return false;
 
-        user.getVisits().add(visit);
         visit.setBusyVisit(true);
+        user.getVisits().add(visit);
         userRepository.save(user);
-        visitRepository.save(visit);
-
         return true;
     }
 

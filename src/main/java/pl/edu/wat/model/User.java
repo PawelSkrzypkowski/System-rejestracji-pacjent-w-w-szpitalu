@@ -54,8 +54,8 @@ public class User {
     @OneToOne
     private Address address;
 
-    @OneToMany(cascade = {CascadeType.ALL})
-    private List<Visit> visits;
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    private List<Visit> visits= new ArrayList<>();
 
     @OneToMany
     private List<Disease> diseases = new ArrayList<>();

@@ -76,8 +76,47 @@ public class UserService{
     }
 
     public List<User> getAllStaff(){
+//        String s1 = "2018-09-10 10:30:00";
+//        String s2 = "2018-09-11 11:00:00";
+//        String s3 = "2018-09-12 11:30:00";
+//        String s4 = "2018-09-13 15:30:00";
+//        String s5 = "2018-09-14 16:00:00";
+//        String s6 = "2018-09-15 17:30:00";
+//        String s7 = "2018-09-16 18:30:00";
+//        String s8 = "2018-09-17 19:00:00";
+//        String s9 = "2018-09-18 19:30:00";
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//        LocalDateTime start1 = LocalDateTime.parse(s1,dtf);
+//        LocalDateTime start2 = LocalDateTime.parse(s2,dtf);
+//        LocalDateTime start3 = LocalDateTime.parse(s3,dtf);
+//        LocalDateTime start4 = LocalDateTime.parse(s4,dtf);
+//        LocalDateTime start5 = LocalDateTime.parse(s5,dtf);
+//        LocalDateTime start6 = LocalDateTime.parse(s6,dtf);
+//        LocalDateTime start7 = LocalDateTime.parse(s7,dtf);
+//        LocalDateTime start8 = LocalDateTime.parse(s8,dtf);
+//        LocalDateTime start9 = LocalDateTime.parse(s9,dtf);
+//        Visit visit1 = new Visit("brak jąder",start1,false,1);
+//        Visit visit2 = new Visit("hyhy",start2,false,1);
+//        Visit visit3 = new Visit("hehe",start3,false,1);
+//        Visit visit4 = new Visit("444",start4,false,1);
+//        Visit visit5 = new Visit("5555",start5,false,1);
+//        Visit visit6 = new Visit("666",start6,false,1);
+//        Visit visit7 = new Visit("777",start7,false,1);
+//        Visit visit8 = new Visit("888",start8,false,1);
+//        Visit visit9 = new Visit("999",start9,false,1);
         List<User> staff = new ArrayList<>();
         userRepository.findAll().stream().filter(s -> s.getSpecialization()!=null).forEach(staff::add);
+//        staff.get(0).getVisits().add(visit1);
+//        staff.get(0).getVisits().add(visit2);
+//        staff.get(0).getVisits().add(visit3);
+//        staff.get(0).getVisits().add(visit4);
+//        staff.get(0).getVisits().add(visit5);
+//        staff.get(0).getVisits().add(visit6);
+//        staff.get(1).getVisits().add(visit7);
+//        staff.get(1).getVisits().add(visit8);
+//        staff.get(1).getVisits().add(visit9);
+//        userRepository.save(staff.get(0));
+//        userRepository.save(staff.get(1));
         return staff;
     }
 

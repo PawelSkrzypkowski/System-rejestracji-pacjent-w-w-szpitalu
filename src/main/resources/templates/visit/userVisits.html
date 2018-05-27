@@ -1,56 +1,38 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Wizyty</title>
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/visit.js}"></script>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+          integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 
 <body>
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">System rejestracji pacjentów w szpitalu</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="nav navbar-nav">
-            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/registerPersonnel}" class="nav-item nav-link" href="#">Rejestracja personelu</a>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-            <a th:href="@{/logout}" class="nav-item nav-link">Wyloguj się</a>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <a th:href="@{/staff}" class="nav-item nav-link">Personel</a>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <a th:href="@{/visits}" class="nav-item nav-link">Wizyty</a>
-        </ul>
-    </div>
+<nav th:replace="header :: header">
 </nav>
 
 <h3 style="text-align:center">Przyszle wizyty</h3>
 <hr>
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col">
             <div class="panel panel-default">
                 <table class="table table-hover" id="dev-table">
                     <tr>
                         <th>Data</th>
-                        <th>Godzina</th>
-                        <th></th>
+                        <th>Anuluj wizytę</th>
                     </tr>
                     <tr th:each="future: ${futureVisits}" th:object="${future}">
                         <td  th:text="${#temporals.format(future.visitDate, 'yyyy-MM-dd HH:mm')}"></td>
-                        <td><a href="#" data-toggle="modal" data-target="#myModal"  th:attr="data-id=${future.id},data-date=${future.visitDate}"><span class='glyphicon glyphicon glyphicon-remove'></span></a></td>
+                        <td><a href="#" data-toggle="modal" data-target="#myModal"  th:attr="data-id=${future.id},data-date=${future.visitDate}"><span class='fas fa-times-circle'></span></a></td>
                     </tr>
                 </table>
             </div>
@@ -64,7 +46,7 @@
 <hr>
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col">
             <div class="panel panel-default">
                 <table class="table table-hover" id="dev-table-historical">
                     <tr>
@@ -101,6 +83,9 @@
         </div>
     </div>
 </div>
+
+<footer th:replace="footer :: footer">
+</footer>
 
 <script type="text/javascript">
     function setHref(){

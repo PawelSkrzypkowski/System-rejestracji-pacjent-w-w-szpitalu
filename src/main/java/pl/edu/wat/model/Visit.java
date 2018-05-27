@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Visit {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String description;
@@ -31,8 +31,7 @@ public class Visit {
 
 
     @Builder
-    public Visit(Long id, String description, LocalDateTime visitDate, boolean busyVisit, int officeNumber) {
-        this.id = id;
+    public Visit(String description, LocalDateTime visitDate, boolean busyVisit, int officeNumber) {
         this.description = description;
         this.visitDate = visitDate;
         this.busyVisit = busyVisit;
