@@ -27,12 +27,14 @@
             <div class="panel panel-default">
                 <table class="table table-hover" id="dev-table">
                     <tr>
+                        <th>Imię i Nazwisko lekarza</th>
                         <th>Data</th>
                         <th>Anuluj wizytę</th>
                     </tr>
                     <tr th:each="future: ${futureVisits}" th:object="${future}">
+                        <td  th:text="${future.doctorName}"></td>
                         <td  th:text="${#temporals.format(future.visitDate, 'yyyy-MM-dd HH:mm')}"></td>
-                        <td><a href="#" data-toggle="modal" data-target="#myModal"  th:attr="data-id=${future.id},data-date=${future.visitDate}"><span class='fas fa-times-circle'></span></a></td>
+                        <td><a href="#" data-toggle="modal" data-target="#myModal"  th:attr="data-id=${future.visitId},data-doctor=${future.doctorName},data-date=${#temporals.format(future.visitDate, 'yyyy-MM-dd HH:mm')}"><span class='fas fa-times-circle'></span></a></td>
                     </tr>
                 </table>
             </div>
@@ -50,12 +52,14 @@
             <div class="panel panel-default">
                 <table class="table table-hover" id="dev-table-historical">
                     <tr>
+                        <th>Imię i Nazwisko lekarza</th>
                         <th>Data</th>
                         <th>Szczegóły</th>
                     </tr>
                     <tr th:each="historical: ${historicalVisits}" th:object="${historical}">
+                        <td  th:text="${historical.doctorName}"></td>
                         <td  th:text="${#temporals.format(historical.visitDate, 'yyyy-MM-dd HH:mm')}"></td>
-                        <td th:text="*{description}"></td>
+                        <td th:text="*{visitDescription}"></td>
                     </tr>
                 </table>
             </div>
@@ -74,7 +78,10 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" id="id" readonly />
-                <h5 class="modal-date" id="modalDate">-</h5>
+                <h5>Data: </h5>
+                <h4 class="modal-date" id="modalDate"></h4>
+                <h5>Lekarz: </h5>
+                <h4 class="modal-doctor" id="modalDoctor"></h4>
             </div>
             <div class="modal-footer">
                 <a class="btn icon-btn btn-primary" data-dismiss="modal"><span class="glyphicon btn-glyphicon glyphicon glyphicon-arrow-left img-circle text-success"></span>Anuluj</a>
