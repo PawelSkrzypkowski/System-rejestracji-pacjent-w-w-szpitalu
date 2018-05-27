@@ -16,6 +16,7 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="nav navbar-nav">
             <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/registerPersonnel}" class="nav-item nav-link" href="#">Rejestracja personelu</a>
+            <a sec:authorize="hasRole('DOCTOR')" th:href="@{/doctor/patientList}" class="nav-item nav-link" href="#">Wykaz pacjentów</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
             <a th:href="@{/logout}" class="nav-item nav-link">Wyloguj się</a>
