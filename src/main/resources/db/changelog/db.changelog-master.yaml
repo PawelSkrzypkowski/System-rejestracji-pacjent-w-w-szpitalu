@@ -3,3 +3,6 @@ databaseChangeLog:
   - include:
       relativeToChangelogFile: true
       file: changes/user_roles.yml
+  - include:
+      relativeToChangelogFile: true
+      file: changes/user_roles nurse.yml
