@@ -8,20 +8,19 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-
 <nav th:replace="header :: header">
 </nav>
 
-
 <div class="container mt-4 offset-2 col-8">
     <div class="row">
-        <h2>System rejestracji pacjentów w szpitalu</h2>
+        Brak pacjenta. <a href="#" onclick="history.back()">Kliknij, aby wrócić.</a>
     </div>
 </div>
 
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
+
 <footer th:replace="footer :: footer">
 
 </footer>

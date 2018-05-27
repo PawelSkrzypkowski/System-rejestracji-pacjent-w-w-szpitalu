@@ -8,20 +8,8 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">System rejestracji pacjentów w szpitalu</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="nav navbar-nav">
-            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/registerPersonnel}" class="nav-item nav-link" href="#">Rejestracja personelu</a>
-            <a sec:authorize="hasRole('DOCTOR')" th:href="@{/doctor/patientList}" class="nav-item nav-link" href="#">Wykaz pacjentów</a>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-            <a th:href="@{/logout}" class="nav-item nav-link">Wyloguj się</a>
-        </ul>
-    </div>
+
+<nav th:replace="header :: header">
 </nav>
 
 
@@ -48,7 +36,7 @@
                 <a th:href="@{/main}" class="btn btn-secondary">Anuluj</a>
             </div>
             <div class="col-6">
-                <input type="submit" class="btn btn-dark" value="Zatwierdź" />
+                <input type="submit" class="btn btn-dark" value="Zatwierdź"/>
             </div>
         </div>
     </form>
@@ -58,5 +46,9 @@
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
+
+<footer th:replace="footer :: footer">
+
+</footer>
 </body>
 </html>

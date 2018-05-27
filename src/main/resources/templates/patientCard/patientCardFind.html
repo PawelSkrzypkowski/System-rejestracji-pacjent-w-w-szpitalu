@@ -8,20 +8,33 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-
 <nav th:replace="header :: header">
 </nav>
 
-
 <div class="container mt-4 offset-2 col-8">
-    <div class="row">
-        <h2>System rejestracji pacjentów w szpitalu</h2>
-    </div>
+    <form th:action="@{/card/}" method="post">
+        <fieldset>
+
+            <div class="form-group">
+                <input type="text" name="pesel" id="pesel" class="form-control input-lg"
+                       placeholder="PESEL" required="true" autofocus="true"/>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <input type="submit" class="btn btn-lg btn-dark btn-block" value="Wyszukaj"/>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                </div>
+            </div>
+        </fieldset>
+    </form>
 </div>
 
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
+
 <footer th:replace="footer :: footer">
 
 </footer>

@@ -5,6 +5,7 @@ import pl.edu.wat.model.enums.JobEnum;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,6 +56,9 @@ public class User {
 
     @OneToMany(cascade = {CascadeType.ALL})
     private List<Visit> visits;
+
+    @OneToMany
+    private List<Disease> diseases = new ArrayList<>();
 
     @Builder
     protected User(String fullname, String email, String login, String password, String pesel, String phone, JobEnum job, String specialization, String doctorFullname, Set<UserRole> roles, Address address, List<Visit> visits) {
