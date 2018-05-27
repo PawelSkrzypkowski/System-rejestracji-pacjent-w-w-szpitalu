@@ -1,4 +1,4 @@
-package pl.edu.wat.web.controller;
+package pl.edu.wat.web;
 
 import lombok.Data;
 

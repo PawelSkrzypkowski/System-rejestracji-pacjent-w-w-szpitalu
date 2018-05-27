@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
 <head>
     <title>System rejestracji pacjentów w szpitalu</title>
     <meta charset="utf-8">
@@ -10,6 +10,32 @@
 <body>
 <nav th:replace="header :: header">
 </nav>
+
+<table th:object="${user}">
+    <tr>
+        <th>
+            Imię i nazwisko
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            PESEL
+        </th>
+        <th>
+            Lekarz prowadzący
+        </th>
+
+    </tr>
+    <tr
+       th:each="user: ${user}">
+        <td th:text="${user.fullname}">Full Name</td>
+        <td th:text="${user.email}">Email</td>
+        <td th:text="${user.pesel}">Email</td>
+        <td th:text="${user.doctorFullname}">Email</td>
+
+    </tr>
+</table>
 
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
