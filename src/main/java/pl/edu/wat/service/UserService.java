@@ -24,10 +24,7 @@ import pl.edu.wat.web.VisitView;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -43,9 +40,6 @@ public class UserService{
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private VisitRepository visitRepository;
 
     @Autowired
     private UserRoleRepository roleRepository;
@@ -88,6 +82,7 @@ public class UserService{
     public List<Visit> getDoctorSchedule(Long id){
         List<Visit> visits = new ArrayList<>();
         userRepository.findById(id).get().getVisits().stream().filter(s-> (s.getVisitDate().isAfter(LocalDateTime.now())==true)).forEach(visits::add);
+        Collections.sort(visits);
         return visits;
     }
 
@@ -121,7 +116,8 @@ public class UserService{
                         .visitDescription(visit.getDescription())
                         .visitDate(visit.getVisitDate())
                         .build());
-
+        Collections.sort(visits);
+        Collections.reverse(visits);
         return visits;
     }
 
@@ -140,7 +136,7 @@ public class UserService{
                         .visitDescription(visit.getDescription())
                         .visitDate(visit.getVisitDate())
                         .build());
-
+        Collections.sort(visits);
         return visits;
     }
 
