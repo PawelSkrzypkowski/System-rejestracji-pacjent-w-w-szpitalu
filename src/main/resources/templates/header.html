@@ -24,6 +24,9 @@
                 pacjenta</a>
         </div>
         <div class="nav navbar-nav">
+            <a sec:authorize="hasRole('DOCTOR')" th:href="@{/doctor/patientList}" class="nav-item nav-link" href="#">Wykaz pacjentów</a>
+        </div>
+        <div class="nav navbar-nav">
             <a sec:authorize="hasRole('USER')" th:href="@{/staff}" class="nav-item nav-link" href="#">Personel</a>
         </div>
         <div class="nav navbar-nav">
