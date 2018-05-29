@@ -51,8 +51,17 @@
             </tr>
             </thead>
             <tbody>
-                <tr th:each="patient : ${patients}">
-                    <td></td>
+                <tr th:each="patient, iterStat : ${patients}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${patient?.fullname}"></td>
+                    <td th:text="${patient?.pesel}"></td>
+                    <td th:text="${patient?.doctorFullname}"></td>
+                    <td th:text="${patientsOnWard[iterStat.index]?.admissionDate}"></td>
+                    <td th:text="${patientsOnWard[iterStat.index]?.dischargeDate}"></td>
+                    <td th:text="${patientsOnWard[iterStat.index]?.ward?.roomNumber}"></td>
+                    <td th:text="${patientsOnWard[iterStat.index]?.bedNumber}"></td>
+                    <td th:text="${patientsOnWard[iterStat.index]?.ward?.wardName}"></td>
+                    <td th:text="${diseases[iterStat.index]?.name}"></td>
                 </tr>
             </tbody>
         </table>
