@@ -2,10 +2,12 @@ package pl.edu.wat.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import pl.edu.wat.model.Visit;
+
 import java.time.LocalDateTime;
 
 @Data
-public class VisitDTO {
+public class VisitDTO implements Comparable<VisitDTO>{
     private Long userId;
     private Long doctorId;
     private Long visitId;
@@ -23,5 +25,10 @@ public class VisitDTO {
         this.visitDate = visitDate;
         this.userName = userName;
         this.doctorName = doctorName;
+    }
+
+    @Override
+    public int compareTo(VisitDTO o) {
+        return getVisitDate().compareTo(o.getVisitDate());
     }
 }

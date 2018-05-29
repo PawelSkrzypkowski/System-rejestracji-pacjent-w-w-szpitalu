@@ -3,9 +3,6 @@ package pl.edu.wat.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import pl.edu.wat.dto.VisitDTO;
 import pl.edu.wat.exception.NotFoundException;
 import pl.edu.wat.model.Address;
@@ -22,7 +19,6 @@ import pl.edu.wat.web.RegisterView;
 import pl.edu.wat.web.VisitView;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -85,6 +81,7 @@ public class UserService {
     public List<Visit> getDoctorSchedule(Long id) {
         List<Visit> visits = new ArrayList<>();
         userRepository.findById(id).get().getVisits().stream().filter(s -> (s.getVisitDate().isAfter(LocalDateTime.now()) == true)).forEach(visits::add);
+        Collections.sort(visits);
         return visits;
     }
 
@@ -156,7 +153,8 @@ public class UserService {
                         .visitDescription(visit.getDescription())
                         .visitDate(visit.getVisitDate())
                         .build());
-
+        Collections.sort(visits);
+        Collections.reverse(visits);
         return visits;
     }
 
@@ -175,7 +173,7 @@ public class UserService {
                         .visitDescription(visit.getDescription())
                         .visitDate(visit.getVisitDate())
                         .build());
-
+        Collections.sort(visits);
         return visits;
     }
 
@@ -212,5 +210,24 @@ public class UserService {
         String dateVisit = date.concat(" ").concat(time);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return LocalDateTime.parse(dateVisit, dtf);
+    }
+
+    public List<Visit> getDoctorFutureVisits() {
+        User user = userRepository.findByLogin(UserDetailsProvider.getCurrentUserUsername());
+        return getDoctorSchedule(user.getId());
+    }
+
+    public void removeVisit(Long id) {
+        User user = userRepository.findByLogin(UserDetailsProvider.getCurrentUserUsername());
+        Visit userVisit = null;
+        for (Visit visit : user.getVisits()) {
+            if (visit.getId().equals(id)) {
+                userVisit = visit;
+                break;
+            }
+        }
+        user.getVisits().remove(userVisit);
+        visitRepository.delete(userVisit);
+        userRepository.save(user);
     }
 }

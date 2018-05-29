@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @NoArgsConstructor
-public class Visit {
+public class Visit implements Comparable<Visit>{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -35,5 +35,10 @@ public class Visit {
         this.visitDate = visitDate;
         this.busyVisit = busyVisit;
         this.officeNumber = officeNumber;
+    }
+
+    @Override
+    public int compareTo(Visit o) {
+        return getVisitDate().compareTo(o.getVisitDate());
     }
 }
