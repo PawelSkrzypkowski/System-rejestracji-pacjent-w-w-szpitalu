@@ -6,7 +6,7 @@
 	<groupId>pl.edu.wat</groupId>
 	<artifactId>szpital</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>szpital</name>
 	<description>System rejestracji pacjentów w szpitalu</description>
@@ -22,6 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<start-class>pl.edu.wat.SzpitalApplication</start-class>
 	</properties>
 
 	<dependencies>
