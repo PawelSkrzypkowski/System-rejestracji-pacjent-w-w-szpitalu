@@ -24,10 +24,7 @@ import pl.edu.wat.web.VisitView;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -35,7 +32,7 @@ import java.util.stream.Collectors;
  * Wojskowa Akademia Techniczna im. Jarosława Dąbrowskiego, Warszawa 2018.
  */
 @Service
-public class UserService{
+public class UserService {
 
     private static final String DEFAULT_ROLE = "ROLE_USER";
     private static final String DOCTOR_ROLE = "ROLE_DOCTOR";
@@ -79,39 +76,77 @@ public class UserService{
         userRepository.save(user);
     }
 
-    public List<User> getAllStaff(){
+    public List<User> getAllStaff() {
         return userRepository.findAll().stream()
-                .filter(pr -> pr.getRoles().stream().anyMatch(s -> s.getId().intValue()==2))
+                .filter(pr -> pr.getRoles().stream().anyMatch(s -> s.getId().intValue() == 2))
                 .collect(Collectors.toList());
     }
 
-    public List<Visit> getDoctorSchedule(Long id){
+    public List<Visit> getDoctorSchedule(Long id) {
         List<Visit> visits = new ArrayList<>();
-        userRepository.findById(id).get().getVisits().stream().filter(s-> (s.getVisitDate().isAfter(LocalDateTime.now())==true)).forEach(visits::add);
+        userRepository.findById(id).get().getVisits().stream().filter(s -> (s.getVisitDate().isAfter(LocalDateTime.now()) == true)).forEach(visits::add);
         return visits;
     }
 
-    public User findUser(Long id){
+    public User findUser(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException());
     }
 
-    public User findUser(String userName){
+    public User findUser(String userName) {
         return userRepository.findByLogin(userName);
     }
 
-    public User getDoctorByVisit(Long id){
+    public User getDoctorByVisit(Long id) {
         return userRepository.findAll().stream()
-                .filter(pr -> pr.getRoles().stream().anyMatch(s -> s.getId().intValue()==2))
-                .filter(pr1 -> pr1.getVisits().stream().anyMatch(c -> c.getId()==id))
+                .filter(pr -> pr.getRoles().stream().anyMatch(s -> s.getId().intValue() == 2))
+                .filter(pr1 -> pr1.getVisits().stream().anyMatch(c -> c.getId() == id))
                 .findFirst().get();
     }
 
-    public List<VisitDTO> getHistoricalVisits(){
+    public List<VisitDTO> getHistoricalVisits() {
         List<VisitDTO> visits = new ArrayList<>();
         User user = userRepository.findByLogin(UserDetailsProvider.getCurrentUserUsername());
 
-        for(Visit visit:user.getVisits())
-            if(visit.getVisitDate().isBefore(LocalDateTime.now()))
+        for (Visit visit : user.getVisits())
+            if (visit.getVisitDate().isBefore(LocalDateTime.now()))
+                visits.add(VisitDTO.builder()
+                        .userId(user.getId())
+                        .doctorId(getDoctorByVisit(visit.getId()).getId())
+                        .visitId(visit.getId())
+                        .doctorName(getDoctorByVisit(visit.getId()).getFullname())
+                        .userName(user.getFullname())
+                        .visitDescription(visit.getDescription())
+                        .visitDate(visit.getVisitDate())
+                        .build());
+
+        return visits;
+    }
+
+    public List<VisitDTO> getHistoricalVisits(long userId) {
+        List<VisitDTO> visits = new ArrayList<>();
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            for (Visit visit : user.getVisits())
+                if (visit.getVisitDate().isBefore(LocalDateTime.now()))
+                    visits.add(VisitDTO.builder()
+                            .userId(user.getId())
+                            .doctorId(getDoctorByVisit(visit.getId()).getId())
+                            .visitId(visit.getId())
+                            .doctorName(getDoctorByVisit(visit.getId()).getFullname())
+                            .userName(user.getFullname())
+                            .visitDescription(visit.getDescription())
+                            .visitDate(visit.getVisitDate())
+                            .build());
+        }
+        return visits;
+    }
+
+    public List<VisitDTO> getHistoricalVisits(User user) {
+        List<VisitDTO> visits = new ArrayList<>();
+
+        for (Visit visit : user.getVisits())
+            if (visit.getVisitDate().isBefore(LocalDateTime.now()))
                 visits.add(VisitDTO.builder()
                         .userId(user.getId())
                         .doctorId(getDoctorByVisit(visit.getId()).getId())
@@ -153,29 +188,29 @@ public class UserService{
         userRepository.save(user);
     }
 
-    public boolean visitExist(VisitView visitView){
+    public boolean visitExist(VisitView visitView) {
         User user = userRepository.findByLogin(UserDetailsProvider.getCurrentUserUsername());
 
-        for(Visit visit:user.getVisits())
-            if(visit.getVisitDate().isEqual(formatStringToDate(visitView.getVisitDate(),visitView.getVisitTime())))
+        for (Visit visit : user.getVisits())
+            if (visit.getVisitDate().isEqual(formatStringToDate(visitView.getVisitDate(), visitView.getVisitTime())))
                 return true;
         return false;
     }
 
-    public void addNewVisit(VisitView visitView){
+    public void addNewVisit(VisitView visitView) {
         User user = userRepository.findByLogin(UserDetailsProvider.getCurrentUserUsername());
 
         user.getVisits().add(Visit.builder()
-                        .visitDate(formatStringToDate(visitView.getVisitDate(),visitView.getVisitTime()))
-                        .busyVisit(false)
-                        .officeNumber(visitView.getOfficeNumber())
-                        .build());
+                .visitDate(formatStringToDate(visitView.getVisitDate(), visitView.getVisitTime()))
+                .busyVisit(false)
+                .officeNumber(visitView.getOfficeNumber())
+                .build());
         userRepository.save(user);
     }
 
-    private LocalDateTime formatStringToDate(String date,String time){
+    private LocalDateTime formatStringToDate(String date, String time) {
         String dateVisit = date.concat(" ").concat(time);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        return LocalDateTime.parse(dateVisit,dtf);
+        return LocalDateTime.parse(dateVisit, dtf);
     }
 }

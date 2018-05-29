@@ -20,7 +20,7 @@
                href="#">Rejestracja personelu</a>
         </div>
         <div class="nav navbar-nav">
-            <a sec:authorize="hasRole('DOCTOR')" th:href="@{/card/}" class="nav-item nav-link" href="#">Wyszukiwanie
+            <a sec:authorize="hasAnyRole('DOCTOR', 'ROLE_NURSE')" th:href="@{/card/}" class="nav-item nav-link" href="#">Wyszukiwanie
                 pacjenta</a>
         </div>
         <div class="nav navbar-nav">

@@ -1,7 +1,11 @@
 package pl.edu.wat.model;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import pl.edu.wat.model.enums.JobEnum;
+import pl.edu.wat.model.enums.ProvinceEnum;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -54,10 +58,10 @@ public class User {
     @OneToOne
     private Address address;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    private List<Visit> visits= new ArrayList<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Visit> visits = new ArrayList<>();
 
-    @OneToMany
+    @ManyToMany
     private List<Disease> diseases = new ArrayList<>();
 
     @ManyToOne
@@ -77,6 +81,10 @@ public class User {
         this.doctorFullname = doctorFullname;
         this.roles = roles;
         this.address = address;
-        this.visits=visits;
+        this.visits = visits;
+    }
+
+    public String getProvince() {
+        return ProvinceEnum.getValue(address.getProvinceEnum());
     }
 }
