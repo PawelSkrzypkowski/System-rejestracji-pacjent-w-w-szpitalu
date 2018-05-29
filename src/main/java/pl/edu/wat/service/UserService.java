@@ -42,6 +42,9 @@ public class UserService{
     private UserRepository userRepository;
 
     @Autowired
+    private VisitRepository visitRepository;
+
+    @Autowired
     private UserRoleRepository roleRepository;
 
     @Autowired
@@ -173,5 +176,24 @@ public class UserService{
         String dateVisit = date.concat(" ").concat(time);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return LocalDateTime.parse(dateVisit,dtf);
+    }
+
+    public List<Visit> getDoctorFutureVisits(){
+        User user = userRepository.findByLogin(UserDetailsProvider.getCurrentUserUsername());
+        return getDoctorSchedule(user.getId());
+    }
+
+    public void removeVisit(Long id){
+        User user = userRepository.findByLogin(UserDetailsProvider.getCurrentUserUsername());
+        Visit userVisit=null;
+        for(Visit visit:user.getVisits()) {
+            if (visit.getId().equals(id)) {
+                userVisit = visit;
+                break;
+            }
+        }
+        user.getVisits().remove(userVisit);
+        visitRepository.delete(userVisit);
+        userRepository.save(user);
     }
 }

@@ -5,12 +5,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.edu.wat.model.Disease;
 import pl.edu.wat.model.PatientOnWard;
 import pl.edu.wat.model.User;
 import pl.edu.wat.model.UserRole;
 import pl.edu.wat.repository.PatientOnWardRepository;
 import pl.edu.wat.repository.UserRepository;
+import pl.edu.wat.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,9 @@ public class DoctorController {
     UserRepository userRepository;
     @Autowired
     PatientOnWardRepository patientOnWardRepository;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/patientList")
     public String getPatientListPage(Model model){
@@ -54,5 +59,17 @@ public class DoctorController {
         model.addAttribute("patientsOnWard", patientOnWardList);
         model.addAttribute("diseases", diseaseList);
         return "patientList";
+    }
+
+    @GetMapping("/visits")
+    public String getDoctorSchedule( Model model){
+        model.addAttribute("visits",userService.getDoctorFutureVisits());
+        return "visit/doctorVisits";
+    }
+
+    @GetMapping("/removeVisit")
+    public String removeDoctorVisit(@RequestParam long id, Model model){
+        userService.removeVisit(id);
+        return  "redirect:/doctor/visits";
     }
 }
