@@ -60,6 +60,9 @@ public class User {
     @OneToMany
     private List<Disease> diseases = new ArrayList<>();
 
+    @ManyToOne
+    private Ward personnelWard;
+
     @Builder
     protected User(String fullname, String email, String login, String password, String pesel, String phone, JobEnum job, String specialization, String doctorFullname, Set<UserRole> roles, Address address, List<Visit> visits) {
         this.id = id;

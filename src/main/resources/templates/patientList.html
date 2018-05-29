@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>System rejestracji pacjentów w szpitalu</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+
+<nav th:replace="header :: header">
+</nav>
+
+
+<div class="container mt-4 offset-2 col-8">
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Lp.
+                </th>
+                <th>
+                    Imię i nazwisko pacjenta
+                </th>
+                <th>
+                    Pesel
+                </th>
+                <th>
+                    Lekarz prowadzący
+                </th>
+                <th>
+                    Data przyjęcia
+                </th>
+                <th>
+                    Planowana data wypisu
+                </th>
+                <th>
+                    Numer sali
+                </th>
+                <th>
+                    Numer łóżka
+                </th>
+                <th>
+                    Nazwa oddziału
+                </th>
+                <th>
+                    Opis choroby
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="patient, iterStat : ${patients}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${patient?.fullname}"></td>
+                    <td th:text="${patient?.pesel}"></td>
+                    <td th:text="${patient?.doctorFullname}"></td>
+                    <td th:text="${patientsOnWard[iterStat.index]?.admissionDate}"></td>
+                    <td th:text="${patientsOnWard[iterStat.index]?.dischargeDate}"></td>
+                    <td th:text="${patientsOnWard[iterStat.index]?.ward?.roomNumber}"></td>
+                    <td th:text="${patientsOnWard[iterStat.index]?.bedNumber}"></td>
+                    <td th:text="${patientsOnWard[iterStat.index]?.ward?.wardName}"></td>
+                    <td th:text="${diseases[iterStat.index]?.name}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<footer th:replace="footer :: footer">
+
+</footer>
+</body>
+</html>
