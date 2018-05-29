@@ -6,12 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.wat.model.User;
+import pl.edu.wat.model.Visit;
 import pl.edu.wat.model.enums.ProvinceEnum;
 import pl.edu.wat.repository.UserRepository;
 import pl.edu.wat.service.UserService;
 import pl.edu.wat.web.RegisterView;
+import pl.edu.wat.web.VisitView;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,5 +73,24 @@ public class UserController {
         model.addAttribute("doctor", userService.findUser(id));
         model.addAttribute("visits", userService.getDoctorSchedule(id));
         return "visit/doctorSchedule";
+    }
+
+    @PostMapping("/addVisit")
+    public String addDoctorVisit(@ModelAttribute @Valid VisitView visitView,
+                                 BindingResult bindResult){
+        if(bindResult.hasErrors()) {
+            return "visit/addVisitValidationError";
+        } else {
+            if(userService.visitExist(visitView)){
+                return "visit/addVisitError";
+            }
+            userService.addNewVisit(visitView);
+            return "visit/addDoctorVisitSuccess";
+        }
+    }
+
+    @GetMapping("/addVisit")
+    public String addDocotrVisit(){
+        return "visit/addDoctorVisit";
     }
 }
