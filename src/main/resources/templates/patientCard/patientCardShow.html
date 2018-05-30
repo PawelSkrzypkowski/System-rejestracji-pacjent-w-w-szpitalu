@@ -11,31 +11,156 @@
 <nav th:replace="header :: header">
 </nav>
 
-<table th:object="${user}">
-    <tr>
-        <th>
-            Imię i nazwisko
-        </th>
-        <th>
-            Email
-        </th>
-        <th>
-            PESEL
-        </th>
-        <th>
-            Lekarz prowadzący
-        </th>
+<div class="container mt-4 offset-2 col-8">
+    <div class="row">
+        <table class="table" th:object="${user}">
+            <tr>
+                <th>
+                    Imię i nazwisko
+                </th>
+                <th>
+                    <td th:text="${user.fullname}"/>
+                </th>
 
-    </tr>
-    <tr
-       th:each="user: ${user}">
-        <td th:text="${user.fullname}">Full Name</td>
-        <td th:text="${user.email}">Email</td>
-        <td th:text="${user.pesel}">Email</td>
-        <td th:text="${user.doctorFullname}">Email</td>
 
-    </tr>
-</table>
+                <th>
+                    Województwo
+                </th>
+                <th>
+                    <td th:text="${user.getProvince()}"/>
+                </th>
+                <tr>
+                    <th>
+                        PESEL
+                    </th>
+                    <th>
+                        <td th:text="${user.pesel}"/>
+                    </th>
+
+
+                    <th>
+                        Miasto
+                    </th>
+                    <th>
+                        <td th:text="${user.address.city}"/>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        Numer telefonu
+                    </th>
+                    <th>
+                        <td th:text="${user.phone}"/>
+                    </th>
+
+
+                    <th>
+                        Numer domu
+                    </th>
+                    <th>
+                        <td th:text="${user.address.houseNumber}"/>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        <td th:text="${user.email}"/>
+                    </th>
+
+
+                    <th>
+                        Numer mieszkania
+                    </th>
+                    <th>
+                        <td th:text="${user.address.flatNumber}"/>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        Lekarz prowadzący
+                    </th>
+                    <th>
+                        <td th:text="${user.doctorFullname}"/>
+                    </th>
+
+
+                    <th>
+                        Kod pocztowy
+                    </th>
+                    <th>
+                        <td>Kod pocztowy</td>
+                    </th>
+                </tr>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="container mt-4 offset-2 col-8">
+    <h4>Wizyty</h4>
+    <div class="row">
+        <table class="table" th:object="${user}">
+            <tr>
+                <th>LP.</th>
+                <th>Opis</th>
+                <th>Data</th>
+                <th>Lekarz</th>
+            </tr>
+            <tr th:each="visit, iterStat : ${visits}">
+                <td th:text="${iterStat.count}"></td>
+                <td th:text="${visit.visitDescription}"></td>
+                <td th:text="${visit.visitDate}"></td>
+                <td th:text="${visit.doctorName}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<form id="newVisit" action="#" method="post" th:action="@{/card/newVisit/__${patientId}__}">
+    <div>
+        <div class="container mt-4 offset-2 col-8">
+            <input sec:authotize="hasAnyRole('ROLE_DOCTOR')" th:if="${patientId==-1}" type="submit"
+                   class="btn btn-dark" value="Dodaj wizytę"/>
+        </div>
+    </div>
+</form>
+
+<div class="container mt-4 offset-2 col-8">
+    <h4>Lista przebytych chorób</h4>
+    <div class="row">
+        <table class="table" th:object="${user}">
+            <tr>
+                <th>Lp.</th>
+                <th>Nazwa</th>
+            </tr>
+            <tr th:each="disease, iterStat : ${diseases}">
+                <td th:text="${iterStat.count}"></td>
+                <td th:text="${disease.name}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<form id="newDisease" action="#" method="post" th:action="@{/card/newDisease}">
+    <div>
+        <div class="container mt-4 offset-2 col-8">
+            <input sec:authotize="hasAnyRole('ROLE_DOCTOR')" th:if="${patientId==-1}" type="submit"
+                   class="btn btn-dark" value="Dodaj chorobę"/>
+        </div>
+    </div>
+</form>
+
+<form id="changeStatus" action="#" method="post" th:action="@{/card/patientRelease/__${patientId}__}">
+    <div>
+        <div class="container mt-4 offset-2 col-8">
+            <input sec:authorize="hasAnyRole('ROLE_NURSE')" th:if="${!buttonText.isEmpty()}" type="submit"
+                   class="btn btn-dark" th:value="${buttonText}"/>
+        </div>
+    </div>
+</form>
+
 
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>

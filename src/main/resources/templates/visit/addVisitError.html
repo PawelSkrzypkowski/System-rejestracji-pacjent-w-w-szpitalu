@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dodaj wizytę</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+
+<nav th:replace="header :: header">
+</nav>
+
+
+<div class="container mt-4 offset-2 col-8">
+    <form id="addVisit" action="#" method="post" th:action="@{/addVisit/}">
+        <div class="row">
+            <div class="col-6">
+                <div class="alert alert-danger">
+                    Wizyta dla tej daty została już ustalona.
+                </div>
+                <label class="control-label col-sm-6" for="visitDate">Data wizyty :</label>
+                <div class="input-group registration-date-time">
+                    <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span>
+                    <input class="form-control" name="visitDate" id="visitDate" type="date">
+                    <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></span>
+                    <input class="form-control" name="visitTime" id="visitTime" type="time">
+                    <span class="input-group-btn">
+                    </span>
+                </div>
+                <input name="officeNumber" id="officeNumber" class="form-control" placeholder="Numer gabinetu"/>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-6">
+                <a th:href="@{/main}" class="btn btn-secondary">Anuluj</a>
+            </div>
+            <div class="col-6">
+                <input type="submit" class="btn btn-dark" value="Zatwierdź"/>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
+<script src="http://momentjs.com/downloads/moment-timezone-with-data.js"></script>
+
+<footer th:replace="footer :: footer">
+
+</footer>
+</body>
+</html>
