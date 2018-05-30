@@ -15,9 +15,11 @@ import pl.edu.wat.repository.UserRepository;
 import pl.edu.wat.repository.VisitRepository;
 import pl.edu.wat.service.UserService;
 import pl.edu.wat.web.PeselView;
+import pl.edu.wat.web.VisitView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -51,10 +53,10 @@ public class PatientCardController {
             }
         }
 
-        return "patientCard/patientCardFind";
+        return "patientCard/patientCardError";
     }
 
-    @GetMapping("/{patientId}")
+    @RequestMapping("/{patientId}")
     public String showCard(@PathVariable Long patientId, Model model) {
 
         Optional<User> userOptional = userRepository.findById(patientId);
@@ -79,6 +81,30 @@ public class PatientCardController {
         }
         return "patientCard/patientCardError";
     }
+
+    @PostMapping("/newVisit/{patientId}")
+    public String onNewVisit(@PathVariable long patientId, @ModelAttribute @Valid VisitView visitView,
+                             BindingResult bindResult, Model model) {
+//        model.addAttribute("patientId", patientId);
+
+        if (bindResult.hasErrors()) {
+            return "visit/addVisitValidationError";
+        } else {
+            if (userService.visitExist(visitView)) {
+                return "visit/addVisitError";
+            }
+            userService.addNewVisit(visitView);
+            return "patientCard/newVisit";
+        }
+    }
+
+    @GetMapping("/newVisit/{patientId}")
+    public String showNewVisit(@PathVariable long patientId, Model model) {
+        model.addAttribute("patientId", patientId);
+
+        return "patientCard/newVisit";
+    }
+
 
     @RequestMapping("/patientRelease/{patientId}")
     public String releasePatient(@PathVariable long patientId) {
