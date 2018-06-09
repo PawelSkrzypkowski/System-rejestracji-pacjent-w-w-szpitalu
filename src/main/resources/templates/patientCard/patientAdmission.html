@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+>
+<head>
+    <title>System rejestracji pacjentów w szpitalu</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+</head>
+<body>
+<nav th:replace="header :: header">
+</nav>
+
+
+<h1>To jest przyjęcie pacjenta</h1>
+
+
+<div class="container mt-4 offset-2 col-8">
+    <form id="admitPatient" action="#" method="post" th:action="@{/card/patientAdmission/(patientId=${patientId})}">
+        <div class="row">
+            <div class="col-6">
+                <input name="roomNumber" class="form-control" placeholder="Numer sali">
+                <input name="bedNumber" class="form-control" placeholder="Numer łóżka">
+                <input name="wardName" class="form-control" placeholder="Nazwa oddziału">
+
+
+                <label class="control-label col-sm-6" for="visitDate">Planowana Data wypisu:</label>
+                <div class="input-group registration-date-time">
+                        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-calendar"
+                                                                                aria-hidden="true"></span></span>
+                    <input class="form-control" name="plannedReleaseDate" id="visitDate" type="date">
+                    <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-time"
+                                                                            aria-hidden="true"></span></span>
+                    <input class="form-control" name="plannedReleaseTime" id="visitTime" type="time">
+                    <span class="input-group-btn">
+                    </span>
+                </div>
+
+            </div>
+            <div class="container mt-4 offset-2 col-8">
+                <input sec:authorize="hasAnyRole('ROLE_NURSE')" type="submit"
+                       class="btn btn-dark" value="Przyjmij na oddział"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<footer th:replace="footer :: footer">
+
+</footer>
+</body>
+</html>

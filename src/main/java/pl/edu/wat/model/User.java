@@ -87,4 +87,8 @@ public class User {
     public String getProvince() {
         return ProvinceEnum.getValue(address.getProvinceEnum());
     }
+
+    public void addDisease(Disease disease) {
+        diseases.add(disease);
+    }
 }

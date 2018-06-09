@@ -3,9 +3,9 @@
 >
 <head>
     <title>System rejestracji pacjentów w szpitalu</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
 </head>
 <body>
 <nav th:replace="header :: header">
@@ -118,10 +118,10 @@
     </div>
 </div>
 
-<form id="newVisit" action="#" method="post" th:action="@{/card/newVisit/__${patientId}__}">
+<form id="newVisit" action="#" method="get" th:action="@{/card/newVisit/__${patientId}__}">
     <div>
         <div class="container mt-4 offset-2 col-8">
-            <input sec:authotize="hasAnyRole('ROLE_DOCTOR')" th:if="${patientId==-1}" type="submit"
+            <input sec:authotize="hasAnyRole('ROLE_DOCTOR')" type="submit"
                    class="btn btn-dark" value="Dodaj wizytę"/>
         </div>
     </div>
@@ -143,10 +143,10 @@
     </div>
 </div>
 
-<form id="newDisease" action="#" method="post" th:action="@{/card/newDisease}">
+<form id="newDisease" action="#" method="post" th:action="@{/card/newDisease(patientId=${patientId})}">
     <div>
         <div class="container mt-4 offset-2 col-8">
-            <input sec:authotize="hasAnyRole('ROLE_DOCTOR')" th:if="${patientId==-1}" type="submit"
+            <input sec:authotize="hasAnyRole('ROLE_DOCTOR')" type="submit"
                    class="btn btn-dark" value="Dodaj chorobę"/>
         </div>
     </div>
@@ -155,12 +155,19 @@
 <form id="changeStatus" action="#" method="post" th:action="@{/card/patientRelease/__${patientId}__}">
     <div>
         <div class="container mt-4 offset-2 col-8">
-            <input sec:authorize="hasAnyRole('ROLE_NURSE')" th:if="${!buttonText.isEmpty()}" type="submit"
-                   class="btn btn-dark" th:value="${buttonText}"/>
+            <input sec:authorize="hasAnyRole('ROLE_NURSE')" th:if="${!buttonTextRelease.isEmpty()}" type="submit"
+                   class="btn btn-dark" th:value="${buttonTextRelease}"/>
         </div>
     </div>
 </form>
-
+<form id="changeStatus" action="#" method="post" th:action="@{/card/patientAdmission/__${patientId}__}">
+    <div>
+        <div class="container mt-4 offset-2 col-8">
+            <input sec:authorize="hasAnyRole('ROLE_NURSE')" th:if="${!buttonTextAdmision.isEmpty()}" type="submit"
+                   class="btn btn-dark" th:value="${buttonTextAdmision}"/>
+        </div>
+    </div>
+</form>
 
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>

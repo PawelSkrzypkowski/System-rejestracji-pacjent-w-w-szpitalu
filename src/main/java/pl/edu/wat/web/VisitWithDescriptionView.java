@@ -6,11 +6,13 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class VisitView {
+public class VisitWithDescriptionView {
     @NotEmpty
     private String visitDate;
     @NotEmpty
     private String visitTime;
     @NotNull
     private Integer officeNumber;
+    @NotEmpty
+    private String description;
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dodaj Chorobę</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+
+<nav th:replace="header :: header">
+</nav>
+
+<div class="container mt-4 offset-2 col-8">
+    <form id="newDisease" action="#" method="post" th:action="@{/card/newDiseaseAdded(patientId=${patientId})}">
+        <div class="row">
+            <div class="col-6">
+
+                <input name="diseaseName" id="diseaseName" class="form-control" placeholder="Nazwa choroby">
+
+            </div>
+        </div>
+        <div>
+            <div class="col-6">
+                <input type="submit" class="btn btn-dark" value="Zatwierdź"/>
+            </div>
+        </div>
+
+    </form>
+</div>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
+<script src="http://momentjs.com/downloads/moment-timezone-with-data.js"></script>
+
+<footer th:replace="footer :: footer">
+
+</footer>
+</body>
+</html>

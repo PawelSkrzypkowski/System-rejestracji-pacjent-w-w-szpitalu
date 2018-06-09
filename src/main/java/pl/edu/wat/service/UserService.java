@@ -5,19 +5,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.edu.wat.dto.VisitDTO;
 import pl.edu.wat.exception.NotFoundException;
-import pl.edu.wat.model.Address;
-import pl.edu.wat.model.User;
-import pl.edu.wat.model.UserRole;
-import pl.edu.wat.model.Visit;
-import pl.edu.wat.repository.AddressRepository;
-import pl.edu.wat.repository.UserRepository;
-import pl.edu.wat.repository.UserRoleRepository;
-import pl.edu.wat.repository.VisitRepository;
+import pl.edu.wat.model.*;
+import pl.edu.wat.repository.*;
 import pl.edu.wat.security.UserDetailsProvider;
-import pl.edu.wat.web.DoctorRegisterView;
-import pl.edu.wat.web.RegisterView;
-import pl.edu.wat.web.VisitView;
+import pl.edu.wat.web.*;
 
+import javax.validation.constraints.NotEmpty;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -48,6 +43,15 @@ public class UserService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    PatientOnWardRepository patientOnWardRepository;
+
+    @Autowired
+    WardRepository wardRepository;
+
+    @Autowired
+    DiseaseRepository diseaseRepository;
 
     public void addWithDefaultRole(RegisterView registerView) {
         User user = User.builder().fullname(registerView.getFullname()).pesel(registerView.getPesel()).
@@ -195,6 +199,15 @@ public class UserService {
         return false;
     }
 
+    public boolean visitExist(VisitWithDescriptionView visitView) {
+        User user = userRepository.findByLogin(UserDetailsProvider.getCurrentUserUsername());
+
+        for (Visit visit : user.getVisits())
+            if (visit.getVisitDate().isEqual(formatStringToDate(visitView.getVisitDate(), visitView.getVisitTime())))
+                return true;
+        return false;
+    }
+
     public void addNewVisit(VisitView visitView) {
         User user = userRepository.findByLogin(UserDetailsProvider.getCurrentUserUsername());
 
@@ -206,10 +219,40 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void addNewVisitWithUserId(VisitWithDescriptionView visitWithDescriptionView, Long patientId) {
+        User doctor = userRepository.findByLogin(UserDetailsProvider.getCurrentUserUsername());
+        Optional<User> optionalUser = userRepository.findById(patientId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            Visit visit = Visit.builder()
+                    .visitDate(formatStringToDate(visitWithDescriptionView.getVisitDate(), visitWithDescriptionView.getVisitTime()))
+                    .busyVisit(false)
+                    .officeNumber(visitWithDescriptionView.getOfficeNumber())
+                    .description(visitWithDescriptionView.getDescription())
+                    .build();
+            user.getVisits().add(visit);
+            userRepository.save(user);
+
+            doctor.getVisits().add(visit);
+            userRepository.save(doctor);
+        }
+    }
+
     private LocalDateTime formatStringToDate(String date, String time) {
         String dateVisit = date.concat(" ").concat(time);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return LocalDateTime.parse(dateVisit, dtf);
+    }
+
+    private Date formatStringToSimpleDate(String date, String time) {
+        String dateVisit = date.concat(" ").concat(time);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        try {
+            return sdf.parse(dateVisit);
+        } catch (ParseException e) {
+            return new Date();
+        }
     }
 
     public List<Visit> getDoctorFutureVisits() {
@@ -230,4 +273,44 @@ public class UserService {
         visitRepository.delete(userVisit);
         userRepository.save(user);
     }
+
+    public void addPatientOnWard(AdmissionView admissionView, Long patientId) {
+        Ward ward = wardRepository.findByWardNameAndRoomNumber(admissionView.getWardName(), admissionView.getRoomNumber());
+        if (ward == null) {
+            ward = new Ward();
+            ward.setWardName(admissionView.getWardName());
+            ward.setRoomNumber(admissionView.getRoomNumber());
+        }
+        Optional<User> userOptional = userRepository.findById(patientId);
+        User user = null;
+        if (userOptional.isPresent()) {
+            user = userOptional.get();
+        }
+        PatientOnWard patientOnWard = PatientOnWard.builder()
+                .addmissionDate(new Date())
+                .dischargeDate(formatStringToSimpleDate(admissionView.getPlannedReleaseDate(), admissionView.getPlannedReleaseTime()))
+                .ward(ward)
+                .patient(user)
+                .bedNumber(admissionView.getBedNumber())
+                .build();
+        patientOnWardRepository.save(patientOnWard);
+    }
+
+    public void addDisease(Long patientId, DiseaseView diseaseView) {
+        Optional<User> optionalUser = userRepository.findById(patientId);
+        if (optionalUser.isPresent()) {
+            @NotEmpty String diseaseName = diseaseView.getDiseaseName();
+            Disease disease = diseaseRepository.findByName(diseaseName);
+            if (disease == null) {
+                disease = new Disease();
+                disease.setName(diseaseName);
+                diseaseRepository.save(disease);
+            }
+
+            User user = optionalUser.get();
+            user.addDisease(disease);
+            userRepository.save(user);
+        }
+    }
+
 }

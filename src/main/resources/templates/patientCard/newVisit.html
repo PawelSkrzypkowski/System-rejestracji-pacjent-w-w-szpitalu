@@ -14,14 +14,16 @@
 
 
 <div class="container mt-4 offset-2 col-8">
-    <form id="newVisit" action="#" method="post" th:action="@{/card/__${patientId}__}">
+    <form id="newVisit" action="#" method="post" th:action="@{/card/newVisitAdded/__${patientId}__}">
         <div class="row">
             <div class="col-6">
                 <label class="control-label col-sm-6" for="visitDate">Data wizyty :</label>
                 <div class="input-group registration-date-time">
-                    <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span>
+                    <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-calendar"
+                                                                            aria-hidden="true"></span></span>
                     <input class="form-control" name="visitDate" id="visitDate" type="date">
-                    <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></span>
+                    <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-time"
+                                                                            aria-hidden="true"></span></span>
                     <input class="form-control" name="visitTime" id="visitTime" type="time">
                     <span class="input-group-btn">
                     </span>

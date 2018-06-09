@@ -41,4 +41,6 @@ public class Visit implements Comparable<Visit>{
     public int compareTo(Visit o) {
         return getVisitDate().compareTo(o.getVisitDate());
     }
+
+
 }

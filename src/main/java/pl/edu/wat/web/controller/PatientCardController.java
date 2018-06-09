@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.edu.wat.dto.VisitDTO;
 import pl.edu.wat.model.Disease;
 import pl.edu.wat.model.PatientOnWard;
@@ -14,10 +15,10 @@ import pl.edu.wat.repository.PatientOnWardRepository;
 import pl.edu.wat.repository.UserRepository;
 import pl.edu.wat.repository.VisitRepository;
 import pl.edu.wat.service.UserService;
-import pl.edu.wat.web.PeselView;
-import pl.edu.wat.web.VisitView;
+import pl.edu.wat.web.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -66,35 +67,39 @@ public class PatientCardController {
             List<Disease> diseases = user.getDiseases();
             List<VisitDTO> historicalVisits = userService.getHistoricalVisits(user);
 
-            String buttonText;
+            String buttonTextRelease;
+            String buttonTextAdmision;
             PatientOnWard patientOnWard = patientOnWardRepository.findByPatientId(user.getId());
             if (patientOnWard == null) {
-                buttonText = "";
+                buttonTextAdmision = "Przyjmij na oddział";
+                buttonTextRelease = "";
             } else {
-                buttonText = "Wypisz";
+                buttonTextAdmision = "";
+                buttonTextRelease = "Wypisz";
             }
+            model.addAttribute("patientId", patientId);
             model.addAttribute("user", user);
             model.addAttribute("visits", historicalVisits);
             model.addAttribute("diseases", diseases);
-            model.addAttribute("buttonText", buttonText);
+            model.addAttribute("buttonTextRelease", buttonTextRelease);
+            model.addAttribute("buttonTextAdmision", buttonTextAdmision);
             return "patientCard/patientCardShow";
         }
         return "patientCard/patientCardError";
     }
 
-    @PostMapping("/newVisit/{patientId}")
-    public String onNewVisit(@PathVariable long patientId, @ModelAttribute @Valid VisitView visitView,
+    @PostMapping("/newVisitAdded/{patientId}")
+    public String onNewVisit(@PathVariable long patientId, @ModelAttribute @Valid VisitWithDescriptionView visitWithDescriptionView,
                              BindingResult bindResult, Model model) {
-//        model.addAttribute("patientId", patientId);
 
         if (bindResult.hasErrors()) {
-            return "visit/addVisitValidationError";
+            return "patientCard/addVisitValidationError";
         } else {
-            if (userService.visitExist(visitView)) {
-                return "visit/addVisitError";
+            if (userService.visitExist(visitWithDescriptionView)) {
+                return "patientCard/addVisitError";
             }
-            userService.addNewVisit(visitView);
-            return "patientCard/newVisit";
+            userService.addNewVisitWithUserId(visitWithDescriptionView, patientId);
+            return "redirect:/card/{patientId}";
         }
     }
 
@@ -105,13 +110,62 @@ public class PatientCardController {
         return "patientCard/newVisit";
     }
 
+    @RequestMapping("/newDisease")
+    public String newDisease(@RequestParam Long patientId, Model model) {
+
+        model.addAttribute("patientId", patientId);
+        return "patientCard/newDisease";
+    }
+
+    @RequestMapping("/newDiseaseAdded")
+    public String addNewDisease(@RequestParam Long patientId, @ModelAttribute @Valid DiseaseView diseaseView, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            return "diseaseError";
+        } else {
+            userService.addDisease(patientId, diseaseView);
+        }
+
+
+        redirectAttributes.addAttribute("patientId", patientId);
+        return "redirect:/card/{patientId}";
+    }
+
 
     @RequestMapping("/patientRelease/{patientId}")
     public String releasePatient(@PathVariable long patientId) {
 
         PatientOnWard patientOnWard = patientOnWardRepository.findByPatientId(patientId);
+        //TODO zapisanie do pliku
+
         patientOnWardRepository.delete(patientOnWard);
 
         return "redirect:/card/{patientId}";
+    }
+
+    @PostMapping("/patientAdmission/{patientId}")
+    public String admitPatient(@PathVariable long patientId, Model model) {
+
+        model.addAttribute("patientId", patientId);
+
+        System.out.println("/card/patientAdmission/ POST");
+
+        return "patientCard/patientAdmission";
+    }
+
+    @PostMapping("/patientAdmission/")
+    public String onPatientAdmitted(@ModelAttribute @Valid AdmissionView admissionView, BindingResult bindingResult, @RequestParam Long patientId) {
+
+        System.out.println("/card/patientAdmission/ GET");
+        System.out.println("PID" + patientId);
+        if (bindingResult.hasErrors()) {
+            return "patientCard/patientAddmisionError";
+        } else {
+
+            userService.addPatientOnWard(admissionView, patientId);
+            System.out.println("Dodano");
+        }
+
+        return "redirect:/card/";
     }
 }
