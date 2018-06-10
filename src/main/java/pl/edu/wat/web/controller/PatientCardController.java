@@ -7,10 +7,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.edu.wat.dto.VisitDTO;
-import pl.edu.wat.model.Disease;
-import pl.edu.wat.model.PatientOnWard;
-import pl.edu.wat.model.User;
-import pl.edu.wat.model.Visit;
+import pl.edu.wat.model.*;
+import pl.edu.wat.repository.ExaminationRepository;
 import pl.edu.wat.repository.PatientOnWardRepository;
 import pl.edu.wat.repository.UserRepository;
 import pl.edu.wat.repository.VisitRepository;
@@ -42,6 +40,9 @@ public class PatientCardController {
     @Autowired
     VisitRepository visitRepository;
 
+    @Autowired
+    ExaminationRepository examinationRepository;
+
     @GetMapping("/")
     public String findPatient() {
 
@@ -71,23 +72,30 @@ public class PatientCardController {
             User user = userOptional.get();
             List<Disease> diseases = user.getDiseases();
             List<VisitDTO> historicalVisits = userService.getVisits(user);
+            List<Examination> examinations = user.getExaminations();
+            
 
             String buttonTextRelease;
             String buttonTextAdmision;
+            String buttonTextExamination;
             PatientOnWard patientOnWard = patientOnWardRepository.findByPatientId(user.getId());
             if (patientOnWard == null) {
                 buttonTextAdmision = "Przyjmij na oddział";
                 buttonTextRelease = "";
+                buttonTextExamination = "";
             } else {
                 buttonTextAdmision = "";
                 buttonTextRelease = "Wypisz";
+                buttonTextExamination = "Nowe Badanie";
             }
             model.addAttribute("patientId", patientId);
             model.addAttribute("user", user);
             model.addAttribute("visits", historicalVisits);
             model.addAttribute("diseases", diseases);
+            model.addAttribute("examinations", examinations);
             model.addAttribute("buttonTextRelease", buttonTextRelease);
             model.addAttribute("buttonTextAdmision", buttonTextAdmision);
+            model.addAttribute("buttonTextExamination", buttonTextExamination);
             return "patientCard/patientCardShow";
         }
         return "patientCard/patientCardError";
@@ -183,18 +191,45 @@ public class PatientCardController {
     }
 
     @PostMapping("/patientAdmission/")
-    public String onPatientAdmitted(@ModelAttribute @Valid AdmissionView admissionView, BindingResult bindingResult, @RequestParam Long patientId) {
+    public String onPatientAdmitted(@ModelAttribute @Valid AdmissionView admissionView, BindingResult bindingResult, @RequestParam Long patientId, RedirectAttributes redirectAttributes) {
 
         System.out.println("/card/patientAdmission/ GET");
         System.out.println("PID" + patientId);
         if (bindingResult.hasErrors()) {
-            return "patientCard/patientAddmisionError";
+            return "patientCard/patientAdmissionError";
         } else {
 
             userService.addPatientOnWard(admissionView, patientId);
             System.out.println("Dodano");
         }
 
-        return "redirect:/card/";
+        redirectAttributes.addAttribute("patientId", patientId);
+
+        return "redirect:/card/{patientId}";
     }
+
+
+    @PostMapping("/newExamination/{patientId}")
+    public String addExamination(@PathVariable long patientId, Model model) {
+
+        model.addAttribute("patientId", patientId);
+
+        return "patientCard/newExamination";
+    }
+
+    @PostMapping("/newExaminationAdded")
+    public String onNewExaminationAdded(@ModelAttribute @Valid ExaminationView examinationView, BindingResult bindingResult, @RequestParam Long patientId, RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            return "patientCard/addingExaminationError";
+        } else {
+            userService.addExamination(patientId, examinationView);
+        }
+
+        redirectAttributes.addAttribute("patientId", patientId);
+
+        return "redirect:/card/{patientId}";
+    }
+
+
 }

@@ -53,6 +53,9 @@ public class UserService {
     @Autowired
     DiseaseRepository diseaseRepository;
 
+    @Autowired
+    ExaminationRepository examinationRepository;
+
     public void addWithDefaultRole(RegisterView registerView) {
         User user = User.builder().fullname(registerView.getFullname()).pesel(registerView.getPesel()).
                 login(registerView.getLogin()).password(passwordEncoder.encode(registerView.getPassword())).email(registerView.getEmail()).
@@ -199,7 +202,7 @@ public class UserService {
         return visits;
     }
 
-    public List<VisitDTO> getVisits(User user){
+    public List<VisitDTO> getVisits(User user) {
         List<VisitDTO> visits = getHistoricalVisits(user);
         visits.addAll(getFutureVisits(user));
         return visits;
@@ -352,6 +355,22 @@ public class UserService {
 
             User user = optionalUser.get();
             user.addDisease(disease);
+            userRepository.save(user);
+        }
+    }
+
+    public void addExamination(Long patientId, ExaminationView examinationView) {
+        Optional<User> optionalUser = userRepository.findById(patientId);
+        if (optionalUser.isPresent()) {
+            @NotEmpty String name = examinationView.getName();
+            Examination examination = examinationRepository.findByName(name);
+            if (examination == null) {
+                examination = new Examination(name);
+                examinationRepository.save(examination);
+            }
+
+            User user = optionalUser.get();
+            user.getExaminations().add(examination);
             userRepository.save(user);
         }
     }

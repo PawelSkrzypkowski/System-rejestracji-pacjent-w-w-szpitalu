@@ -64,6 +64,9 @@ public class User {
     @ManyToMany
     private List<Disease> diseases = new ArrayList<>();
 
+    @ManyToMany
+    private List<Examination> examinations = new ArrayList<>();
+
     @ManyToOne
     private Ward personnelWard;
 
