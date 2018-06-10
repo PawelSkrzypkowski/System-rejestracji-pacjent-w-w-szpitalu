@@ -12,6 +12,9 @@
 </nav>
 
 <div class="container mt-4 offset-2 col-8">
+    <h1>Karta Pacjenta</h1>
+</div>
+<div class="container mt-4 offset-2 col-8">
     <div class="row">
         <table class="table" th:object="${user}">
             <tr>
@@ -104,14 +107,14 @@
         <table class="table" th:object="${user}">
             <tr>
                 <th>LP.</th>
-                <th>Opis</th>
                 <th>Data</th>
+                <th>Opis</th>
                 <th>Lekarz</th>
             </tr>
             <tr th:each="visit, iterStat : ${visits}">
                 <td th:text="${iterStat.count}"></td>
-                <td th:text="${visit.visitDescription}"></td>
                 <td th:text="${visit.visitDate}"></td>
+                <td th:text="${visit.visitDescription}"></td>
                 <td th:text="${visit.doctorName}"></td>
             </tr>
         </table>

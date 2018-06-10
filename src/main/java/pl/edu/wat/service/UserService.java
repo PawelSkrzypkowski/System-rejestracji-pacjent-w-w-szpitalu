@@ -181,6 +181,30 @@ public class UserService {
         return visits;
     }
 
+    public List<VisitDTO> getFutureVisits(User user) {
+        List<VisitDTO> visits = new ArrayList<>();
+
+        for (Visit visit : user.getVisits())
+            if (visit.getVisitDate().isAfter(LocalDateTime.now()) && visit.isBusyVisit())
+                visits.add(VisitDTO.builder()
+                        .userId(user.getId())
+                        .doctorId(getDoctorByVisit(visit.getId()).getId())
+                        .visitId(visit.getId())
+                        .doctorName(getDoctorByVisit(visit.getId()).getFullname())
+                        .userName(user.getFullname())
+                        .visitDescription(visit.getDescription())
+                        .visitDate(visit.getVisitDate())
+                        .build());
+        Collections.sort(visits);
+        return visits;
+    }
+
+    public List<VisitDTO> getVisits(User user){
+        List<VisitDTO> visits = getHistoricalVisits(user);
+        visits.addAll(getFutureVisits(user));
+        return visits;
+    }
+
     public void addWithNurseRole(DoctorRegisterView registerView) {
         User user = User.builder().fullname(registerView.getFullname()).pesel(registerView.getPesel()).
                 login(registerView.getLogin()).password(passwordEncoder.encode(registerView.getPassword())).email(registerView.getEmail()).
@@ -231,11 +255,30 @@ public class UserService {
                     .officeNumber(visitWithDescriptionView.getOfficeNumber())
                     .description(visitWithDescriptionView.getDescription())
                     .build();
-            user.getVisits().add(visit);
-            userRepository.save(user);
-
             doctor.getVisits().add(visit);
             userRepository.save(doctor);
+
+            //TODO znaleźć id wizyty i dodać do userRepository
+
+            Optional<User> optionalUser1 = userRepository.findById(doctor.getId());
+            if (optionalUser.isPresent()) {
+                User user1 = optionalUser1.get();
+                List<Visit> visits = user1.getVisits();
+                Visit foundVisit = null;
+                for (Visit visitTmp : visits) {
+                    if (visitTmp.getVisitDate().isEqual(visit.getVisitDate())) {
+                        foundVisit = visitTmp;
+                    }
+                }
+
+                user.getVisits().add(foundVisit);
+                userRepository.save(user);
+            }
+
+
+//            user.getVisits().add(visit);
+
+
         }
     }
 

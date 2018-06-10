@@ -21,14 +21,15 @@
                 <div class="input-group registration-date-time">
                     <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-calendar"
                                                                             aria-hidden="true"></span></span>
-                    <input class="form-control" name="visitDate" id="visitDate" type="date">
+                    <input class="form-control" name="visitDate" id="visitDate" type="date" required="required">
                     <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-time"
                                                                             aria-hidden="true"></span></span>
-                    <input class="form-control" name="visitTime" id="visitTime" type="time">
+                    <input class="form-control" name="visitTime" id="visitTime" type="time" required="required">
                     <span class="input-group-btn">
                     </span>
                 </div>
-                <input name="officeNumber" id="officeNumber" class="form-control" placeholder="Numer gabinetu"/>
+                <input name="officeNumber" id="officeNumber" class="form-control" placeholder="Numer gabinetu"
+                       required="required" type="number"/>
                 <input name="description" id="description" class="form-control" placeholder="Opis wizyty"/>
             </div>
         </div>

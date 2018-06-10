@@ -13,6 +13,6 @@ public class VisitWithDescriptionView {
     private String visitTime;
     @NotNull
     private Integer officeNumber;
-    @NotEmpty
-    private String description;
+    @NotNull
+    private String description = "";
 }

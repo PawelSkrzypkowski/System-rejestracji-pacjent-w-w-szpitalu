@@ -15,9 +15,12 @@ import pl.edu.wat.repository.PatientOnWardRepository;
 import pl.edu.wat.repository.UserRepository;
 import pl.edu.wat.repository.VisitRepository;
 import pl.edu.wat.service.UserService;
+import pl.edu.wat.utils.SaveFileUtils;
 import pl.edu.wat.web.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -63,9 +66,8 @@ public class PatientCardController {
         Optional<User> userOptional = userRepository.findById(patientId);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            List<Visit> visitList = user.getVisits();
             List<Disease> diseases = user.getDiseases();
-            List<VisitDTO> historicalVisits = userService.getHistoricalVisits(user);
+            List<VisitDTO> historicalVisits = userService.getVisits(user);
 
             String buttonTextRelease;
             String buttonTextAdmision;
@@ -133,7 +135,7 @@ public class PatientCardController {
 
 
     @RequestMapping("/patientRelease/{patientId}")
-    public String releasePatient(@PathVariable long patientId) {
+    public String releasePatient(HttpServletResponse response, @PathVariable long patientId) {
 
         PatientOnWard patientOnWard = patientOnWardRepository.findByPatientId(patientId);
         //TODO zapisanie do pliku
