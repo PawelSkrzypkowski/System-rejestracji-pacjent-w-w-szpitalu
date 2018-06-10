@@ -112,10 +112,15 @@
                 <th>Lekarz</th>
             </tr>
             <tr th:each="visit, iterStat : ${visits}">
-                <td th:text="${iterStat.count}"></td>
-                <td th:text="${visit.visitDate}"></td>
-                <td th:text="${visit.visitDescription}"></td>
-                <td th:text="${visit.doctorName}"></td>
+                <form id="editVisit" action="#" method="post"
+                      th:action="@{/card/editVisit(patientId=${patientId}, visitId=${visit.visitId})}">
+                    <td th:text="${iterStat.count}"></td>
+                    <td th:text="${visit.visitDate}"></td>
+                    <td th:text="${visit.visitDescription}"></td>
+                    <td th:text="${visit.doctorName}"></td>
+                    <td><input sec:authotize="hasAnyRole('ROLE_DOCTOR')" type="submit"
+                               class="btn btn-dark" value="Edytuj Wizytę"/></td>
+                </form>
             </tr>
         </table>
     </div>
@@ -171,6 +176,7 @@
         </div>
     </div>
 </form>
+
 
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>

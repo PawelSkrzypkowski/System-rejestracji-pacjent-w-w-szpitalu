@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Dodaj Chorobę</title>
+    <title>Dodaj wizytę</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -12,13 +12,22 @@
 <nav th:replace="header :: header">
 </nav>
 
+
 <div class="container mt-4 offset-2 col-8">
-    <form id="newDisease" action="#" method="post" th:action="@{/card/newDiseaseAdded(patientId=${patientId})}">
+    <form id="editVisit" action="#" method="post"
+          th:action="@{/card/visitEdited/__${patientId}__(visitId=${visit.getId()})}" th:object="${visit}">
+        <div>
+            <h3>Data: </h3>
+            <h3 th:text="${visit.getVisitDate()}"></h3>
+            <h4>Numer gabinetu</h4>
+            <h5 th:text="${visit.getOfficeNumber()}"></h5>
+        </div>
+
         <div class="row">
             <div class="col-6">
-
-                <input name="diseaseName" id="diseaseName" class="form-control" placeholder="Nazwa choroby" required="required" autofocus="autofocus">
-
+                <input name="description" id="description" class="form-control" placeholder="Opis wizyty"
+                       autofocus="autofocus"
+                       th:value="${visit.description}"/>
             </div>
         </div>
         <div class="row mt-2">
@@ -29,9 +38,10 @@
                 <input type="submit" class="btn btn-dark" value="Zatwierdź"/>
             </div>
         </div>
-
     </form>
+
 </div>
+
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>

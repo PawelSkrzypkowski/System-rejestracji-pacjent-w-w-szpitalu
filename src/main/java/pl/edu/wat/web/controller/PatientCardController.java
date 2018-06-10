@@ -39,6 +39,9 @@ public class PatientCardController {
     @Autowired
     PatientOnWardRepository patientOnWardRepository;
 
+    @Autowired
+    VisitRepository visitRepository;
+
     @GetMapping("/")
     public String findPatient() {
 
@@ -103,6 +106,30 @@ public class PatientCardController {
             userService.addNewVisitWithUserId(visitWithDescriptionView, patientId);
             return "redirect:/card/{patientId}";
         }
+    }
+
+    @PostMapping("/visitEdited/{patientId}")
+    public String onVisitEdited(@PathVariable long patientId, @RequestParam Long visitId, @ModelAttribute @Valid VisitDescriptionView visitDescriptionView,
+                                BindingResult bindResult, Model model) {
+
+        if (bindResult.hasErrors()) {
+            return "patientCard/addVisitValidationError";
+        } else {
+            Visit visit = visitRepository.getOne(visitId);
+            visit.setDescription(visitDescriptionView.getDescription());
+            visitRepository.save(visit);
+            return "redirect:/card/{patientId}";
+        }
+    }
+
+
+    @RequestMapping("/editVisit")
+    public String editVisit(Model model, @RequestParam Long patientId, @RequestParam Long visitId) {
+        Visit visit = visitRepository.getOne(visitId);
+        model.addAttribute("visit", visit);
+        model.addAttribute("patientId", patientId);
+
+        return "patientCard/editVisit";
     }
 
     @GetMapping("/newVisit/{patientId}")
