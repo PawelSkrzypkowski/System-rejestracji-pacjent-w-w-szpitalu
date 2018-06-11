@@ -1,10 +1,12 @@
 package pl.edu.wat.model;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -20,7 +22,7 @@ public class PatientOnWard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     private Ward ward;
 
     private Date admissionDate;
@@ -29,6 +31,15 @@ public class PatientOnWard {
 
     private Integer bedNumber;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     private User patient;
+
+    @Builder
+    public PatientOnWard(Ward ward, Date addmissionDate, Date dischargeDate, Integer bedNumber, User patient) {
+        this.ward = ward;
+        this.admissionDate = addmissionDate;
+        this.dischargeDate = dischargeDate;
+        this.bedNumber = bedNumber;
+        this.patient = patient;
+    }
 }

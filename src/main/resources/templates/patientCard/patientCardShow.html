@@ -3,14 +3,17 @@
 >
 <head>
     <title>System rejestracji pacjentów w szpitalu</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
 </head>
 <body>
 <nav th:replace="header :: header">
 </nav>
 
+<div class="container mt-4 offset-2 col-8">
+    <h1>Karta Pacjenta</h1>
+</div>
 <div class="container mt-4 offset-2 col-8">
     <div class="row">
         <table class="table" th:object="${user}">
@@ -104,24 +107,29 @@
         <table class="table" th:object="${user}">
             <tr>
                 <th>LP.</th>
-                <th>Opis</th>
                 <th>Data</th>
+                <th>Opis</th>
                 <th>Lekarz</th>
             </tr>
             <tr th:each="visit, iterStat : ${visits}">
-                <td th:text="${iterStat.count}"></td>
-                <td th:text="${visit.visitDescription}"></td>
-                <td th:text="${visit.visitDate}"></td>
-                <td th:text="${visit.doctorName}"></td>
+                <form id="editVisit" action="#" method="post"
+                      th:action="@{/card/editVisit(patientId=${patientId}, visitId=${visit.visitId})}">
+                    <td th:text="${iterStat.count}"></td>
+                    <td th:text="${visit.visitDate}"></td>
+                    <td th:text="${visit.visitDescription}"></td>
+                    <td th:text="${visit.doctorName}"></td>
+                    <td><input sec:authotize="hasAnyRole('ROLE_DOCTOR')" type="submit"
+                               class="btn btn-dark" value="Edytuj Wizytę"/></td>
+                </form>
             </tr>
         </table>
     </div>
 </div>
 
-<form id="newVisit" action="#" method="post" th:action="@{/card/newVisit/__${patientId}__}">
+<form id="newVisit" action="#" method="get" th:action="@{/card/newVisit/__${patientId}__}">
     <div>
         <div class="container mt-4 offset-2 col-8">
-            <input sec:authotize="hasAnyRole('ROLE_DOCTOR')" th:if="${patientId==-1}" type="submit"
+            <input sec:authotize="hasAnyRole('ROLE_DOCTOR')" type="submit"
                    class="btn btn-dark" value="Dodaj wizytę"/>
         </div>
     </div>
@@ -143,10 +151,27 @@
     </div>
 </div>
 
-<form id="newDisease" action="#" method="post" th:action="@{/card/newDisease}">
+<div class="container mt-4 offset-2 col-8" sec:authorize="hasAnyRole('ROLE_NURSE')"
+     th:if="${!buttonTextExamination.isEmpty()}">
+    <h4>Lista badań</h4>
+    <div class="row">
+        <table class="table" th:object="${user}">
+            <tr>
+                <th>Lp.</th>
+                <th>Nazwa</th>
+            </tr>
+            <tr th:each="examination, iterStat : ${examinations}">
+                <td th:text="${iterStat.count}"></td>
+                <td th:text="${examination.name}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<form id="newDisease" action="#" method="post" th:action="@{/card/newDisease(patientId=${patientId})}">
     <div>
         <div class="container mt-4 offset-2 col-8">
-            <input sec:authotize="hasAnyRole('ROLE_DOCTOR')" th:if="${patientId==-1}" type="submit"
+            <input sec:authotize="hasAnyRole('ROLE_DOCTOR')" type="submit"
                    class="btn btn-dark" value="Dodaj chorobę"/>
         </div>
     </div>
@@ -155,8 +180,24 @@
 <form id="changeStatus" action="#" method="post" th:action="@{/card/patientRelease/__${patientId}__}">
     <div>
         <div class="container mt-4 offset-2 col-8">
-            <input sec:authorize="hasAnyRole('ROLE_NURSE')" th:if="${!buttonText.isEmpty()}" type="submit"
-                   class="btn btn-dark" th:value="${buttonText}"/>
+            <input sec:authorize="hasAnyRole('ROLE_NURSE')" th:if="${!buttonTextRelease.isEmpty()}" type="submit"
+                   class="btn btn-dark" th:value="${buttonTextRelease}"/>
+        </div>
+    </div>
+</form>
+<form id="changeStatus" action="#" method="post" th:action="@{/card/patientAdmission/__${patientId}__}">
+    <div>
+        <div class="container mt-4 offset-2 col-8">
+            <input sec:authorize="hasAnyRole('ROLE_NURSE')" th:if="${!buttonTextAdmision.isEmpty()}" type="submit"
+                   class="btn btn-dark" th:value="${buttonTextAdmision}"/>
+        </div>
+    </div>
+</form>
+<form id="addProcedure" action="#" method="post" th:action="@{/card/newExamination/__${patientId}__}">
+    <div>
+        <div class="container mt-4 offset-2 col-8">
+            <input sec:authorize="hasAnyRole('ROLE_NURSE')" th:if="${!buttonTextExamination.isEmpty()}" type="submit"
+                   class="btn btn-dark" th:value="${buttonTextExamination}"/>
         </div>
     </div>
 </form>
