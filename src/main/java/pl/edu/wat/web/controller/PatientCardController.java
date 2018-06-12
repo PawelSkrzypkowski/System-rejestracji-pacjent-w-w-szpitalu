@@ -13,7 +13,6 @@ import pl.edu.wat.repository.PatientOnWardRepository;
 import pl.edu.wat.repository.UserRepository;
 import pl.edu.wat.repository.VisitRepository;
 import pl.edu.wat.service.UserService;
-import pl.edu.wat.utils.SaveFileUtils;
 import pl.edu.wat.web.*;
 
 import javax.servlet.http.HttpServletResponse;
