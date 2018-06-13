@@ -30,8 +30,8 @@ public class RegisterView {
     private String city;
     @NotEmpty
     private String street;
-    @NotNull
-    private Integer houseNumber;
+    @NotEmpty
+    private String houseNumber;
     private Integer flatNumber;
     @NotEmpty
     private String doctorFullname;

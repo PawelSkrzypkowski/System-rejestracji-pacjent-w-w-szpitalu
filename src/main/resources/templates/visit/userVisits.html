@@ -94,12 +94,15 @@
 <footer th:replace="footer :: footer">
 </footer>
 
-<script type="text/javascript">
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var href = /*[[@{/release}]]*/ 'default';
     function setHref(){
         var userInput = document.getElementById('id').value;
         var lnk = document.getElementById('btnYes');
-        lnk.href = "szpital/release?id=" + userInput;
+        lnk.href = href + "?id=" + userInput;
     }
+    /*]]>*/
 </script>
 </body>
 </html>
