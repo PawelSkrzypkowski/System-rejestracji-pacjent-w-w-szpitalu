@@ -56,13 +56,14 @@
                         <td th:text="${user.phone}"/>
                     </th>
 
+                    <th>
+                        Ulica
+                    </th>
+                    <th>
+                        <td th:text="${user.address.street}"/>
+                    </th>
 
-                    <th>
-                        Numer domu
-                    </th>
-                    <th>
-                        <td th:text="${user.address.houseNumber}"/>
-                    </th>
+
                 </tr>
                 <tr>
                     <th>
@@ -72,13 +73,14 @@
                         <td th:text="${user.email}"/>
                     </th>
 
+                    <th>
+                        Numer domu
+                    </th>
+                    <th>
+                        <td th:text="${user.address.houseNumber}"/>
+                    </th>
 
-                    <th>
-                        Numer mieszkania
-                    </th>
-                    <th>
-                        <td th:text="${user.address.flatNumber}"/>
-                    </th>
+
                 </tr>
                 <tr>
                     <th>
@@ -88,13 +90,14 @@
                         <td th:text="${user.doctorFullname}"/>
                     </th>
 
+                    <th>
+                        Numer mieszkania
+                    </th>
+                    <th>
+                        <td th:text="${user.address.flatNumber}"/>
+                    </th>
 
-                    <th>
-                        Kod pocztowy
-                    </th>
-                    <th>
-                        <td>Kod pocztowy</td>
-                    </th>
+
                 </tr>
             </tr>
         </table>
