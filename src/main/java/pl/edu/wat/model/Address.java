@@ -23,8 +23,8 @@ public class Address{
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        @NotNull
-        Integer houseNumber;
+        @NotEmpty
+        String houseNumber;
 
         Integer flatNumber;
 
@@ -38,7 +38,7 @@ public class Address{
         ProvinceEnum provinceEnum;
 
         @Builder
-        protected Address(Long id, Integer houseNumber, Integer flatNumber, String street, String city, ProvinceEnum provinceEnum) {
+        protected Address(Long id, String houseNumber, Integer flatNumber, String street, String city, ProvinceEnum provinceEnum) {
                 this.id = id;
                 this.houseNumber = houseNumber;
                 this.flatNumber = flatNumber;

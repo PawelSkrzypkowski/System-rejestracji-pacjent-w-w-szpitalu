@@ -56,6 +56,9 @@ public class UserService {
     @Autowired
     ExaminationRepository examinationRepository;
 
+    @Autowired
+    EmailService emailService;
+
     public void addWithDefaultRole(RegisterView registerView) {
         User user = User.builder().fullname(registerView.getFullname()).pesel(registerView.getPesel()).
                 login(registerView.getLogin()).password(passwordEncoder.encode(registerView.getPassword())).email(registerView.getEmail()).
@@ -68,6 +71,9 @@ public class UserService {
         UserRole defaultRole = roleRepository.findByRole(DEFAULT_ROLE);
         user.getRoles().add(defaultRole);
         userRepository.save(user);
+        if(registerView.getEmail() != null) {
+            emailService.send(registerView.getEmail());
+        }
     }
 
     public void addWithDoctorRole(DoctorRegisterView registerView) {
@@ -77,6 +83,9 @@ public class UserService {
         UserRole doctorRole = roleRepository.findByRole(DOCTOR_ROLE);
         user.getRoles().add(doctorRole);
         userRepository.save(user);
+        if(registerView.getEmail() != null) {
+            emailService.send(registerView.getEmail());
+        }
     }
 
     public List<User> getAllStaff() {
@@ -215,6 +224,10 @@ public class UserService {
         UserRole doctorRole = roleRepository.findByRole(NURSE_ROLE);
         user.getRoles().add(doctorRole);
         userRepository.save(user);
+
+        if(registerView.getEmail() != null) {
+            emailService.send(registerView.getEmail());
+        }
     }
 
     public boolean visitExist(VisitView visitView) {
