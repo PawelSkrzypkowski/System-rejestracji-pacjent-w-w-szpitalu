@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>System rejestracji pacjentów w szpitalu</title>
+    <title th:text="#{index.title}"></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -14,31 +14,31 @@
 <div class="container mt-4 offset-2 col-8">
     <form th:action="@{/login}" method="post">
         <fieldset>
-            <h1>Zaloguj się</h1>
+            <h1 th:text="#{loginPage.login}"></h1>
 
             <div th:if="${param.error}">
                 <div class="alert alert-danger">
-                    Niepoprawny login i/lub hasło.
+                    [[#{loginPage.error1}]]
                 </div>
             </div>
             <div th:if="${param.logout}">
                 <div class="alert alert-info">
-                    Zostałeś poprawnie wylogowany.
+                    [[#{loginPage.logout}]]
                 </div>
             </div>
 
             <div class="form-group">
                 <input type="text" name="username" id="username" class="form-control input-lg"
-                       placeholder="Login" required="true" autofocus="true"/>
+                       th:placeholder="#{loginPage.loginName}" required="true" autofocus="true"/>
             </div>
             <div class="form-group">
                 <input type="password" name="password" id="password" class="form-control input-lg"
-                       placeholder="Hasło" required="true"/>
+                       th:placeholder="#{loginPage.pass}" required="true"/>
             </div>
 
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6">
-                    <input type="submit" class="btn btn-lg btn-dark btn-block" value="Zaloguj"/>
+                    <input type="submit" class="btn btn-lg btn-dark btn-block" th:value="#{loginPage.loginButton}"/>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6">
                 </div>

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Wizyta</title>
+    <title th:text="#{index.title}"></title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
           integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -18,7 +18,7 @@
 
 <div class="main-content">
     <div class="container" align="center">
-        <h3 class="site-title">Czy zatwierdzic wizyte ?</h3>
+        <h3 class="site-title" th:text="#{confirmVisit.allow}"></h3>
         <div class="container" align="center">
             <div class="panel panel-default" style="background-color:gray;">
                 <div class=" panel-body ">
@@ -27,10 +27,10 @@
                             <h4 th:text="'Data : '+${#temporals.format(visit.visitDate, 'yyyy-MM-dd HH:mm')}"></h4>
                             <h4 th:text="'Lekarz : '+${doctor.fullname}"></h4>
                             <a class="btn icon-btn btn-primary" th:href="@{details(id=${doctor.id})}"><span
-                                    class="fa fa-arrow-circle-left"></span>Powrot</a>
+                                    class="fa fa-arrow-circle-left"></span>[[#{confirmVisit.back}]]</a>
                             <a class="btn icon-btn btn-success"
                                th:href="@{bookvisit(doctorId=${doctor.id},visitId=${visit.id})}"><span
-                                    class="fa fa-plus-circle"></span>Zapisz mnie</a>
+                                    class="fa fa-plus-circle"></span>[[#{confirmVisit.save}]]</a>
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Terminarz</title>
+    <title th:text="#{doctorVisits.title}"></title>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
@@ -14,7 +14,7 @@
 <nav th:replace="header :: header">
 </nav>
 
-<h3 style="text-align:center">Personel</h3>
+<h3 style="text-align:center" th:text="#{doctorVisits.header}"></h3>
 <hr>
 <div class="container">
     <div class="row">
@@ -22,21 +22,21 @@
             <div class="panel panel-default">
                 <table class="table table-hover" id="dev-table">
                     <tr>
-                        <th>Data</th>
-                        <th>Numer gabinetu</th>
-                        <th>Rezerwacja</th>
-                        <th>Usun</th>
+                        <th th:text="#{doctorVisits.date}"></th>
+                        <th th:text="#{doctorVisits.roomNr}"></th>
+                        <th th:text="#{doctorVisits.reservation}"></th>
+                        <th th:text="#{doctorVisits.remove}"></th>
                     </tr>
                     <tr th:each="visit: ${visits}" th:object="${visit}">
                         <td th:text="${#temporals.format(visit.visitDate, 'yyyy-MM-dd HH:mm')}"></td>
                         <td th:text="*{officeNumber}"></td>
                         <div th:if="${visit.busyVisit}==false">
-                            <td>Wolna</td>
+                            <td th:text="#{doctorVisits.free}"></td>
                             <td><button th:data="*{id}" class="removeVisit"><span
                                     class='fa fa-trash'></span></button></td>
                         </div>
                         <div th:unless="${visit.busyVisit}==false">
-                            <td>Zarezerwowana</td>
+                            <td th:text="#{doctorVisits.busy}"></td>
                             <td><a><span class='fa fa-trash text-muted'></span></a>
                             </td>
                         </div>

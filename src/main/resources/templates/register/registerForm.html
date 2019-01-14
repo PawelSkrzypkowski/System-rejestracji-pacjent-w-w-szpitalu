@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>System rejestracji pacjentów w szpitalu</title>
+    <title th:text="#{index.title}"></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -15,31 +15,31 @@
     <form id="registerUser" action="#" method="post" th:action="@{/register}">
         <div class="row">
             <div class="col-6">
-                <input name="fullname" class="form-control" placeholder="Imię i nazwisko"/>
-                <input name="pesel" class="form-control" placeholder="Pesel"/>
-                <input name="email" class="form-control" placeholder="E-mail(opcjonalnie)"/>
-                <input name="login" class="form-control" placeholder="Login"/>
-                <input name="password" type="password" class="form-control" placeholder="Hasło"/>
-                <input name="phone" class="form-control" placeholder="Numer telefonu"/>
+                <input name="fullname" class="form-control" th:placeholder="#{registerDoctor.fullname}"/>
+                <input name="pesel" class="form-control" th:placeholder="#{registerDoctor.pesel}"/>
+                <input name="email" class="form-control" th:placeholder="#{registerDoctor.email}"/>
+                <input name="login" class="form-control" th:placeholder="#{registerDoctor.login}"/>
+                <input name="password" type="password" class="form-control" th:placeholder="#{registerDoctor.pass}"/>
+                <input name="phone" class="form-control" th:placeholder="#{registerDoctor.phone}"/>
             </div>
             <div class="col-6">
                 <select name="province" class="form-control">
                     <option th:each="instance : ${provinceMap}" th:value="${instance.key}"
                             th:text="${instance.value}"></option>
                 </select>
-                <input name="city" class="form-control" placeholder="Miasto"/>
-                <input name="street" class="form-control" placeholder="Ulica"/>
-                <input name="houseNumber" class="form-control" placeholder="Numer domu"/>
-                <input name="flatNumber" class="form-control" placeholder="Numer mieszkania(opcjonalnie)"/>
-                <input name="doctorFullname" class="form-control" placeholder="Imię i nazwisko lekarza rodzinnego"/>
+                <input name="city" class="form-control" th:placeholder="#{register.city}"/>
+                <input name="street" class="form-control" th:placeholder="#{register.street}"/>
+                <input name="houseNumber" class="form-control" th:placeholder="#{register.strretNr}"/>
+                <input name="flatNumber" class="form-control" th:placeholder="#{register.home}"/>
+                <input name="doctorFullname" class="form-control" th:placeholder="#{register.doctorName}"/>
             </div>
         </div>
         <div class="row mt-2">
             <div class="col-6">
-                <a href="/" class="btn btn-secondary">Anuluj</a>
+                <a href="/" class="btn btn-secondary" th:text="#{editVisit.cancel}"></a>
             </div>
             <div class="col-6">
-                <input type="submit" class="btn btn-dark" value="Zatwierdź"/>
+                <input type="submit" class="btn btn-dark" th:value="#{editVisit.cancel}"/>
             </div>
         </div>
     </form>

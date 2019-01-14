@@ -4,9 +4,9 @@
         <div class="row">
             <div class="col-6">
                     <div class="alert alert-danger">
-                        Wprowadzone dane są niepoprawne.
+                        [[#{addDoctorVisit.error.alert2}]]
                     </div>
-                <label class="control-label col-sm-6" for="visitDate">Data wizyty :</label>
+                <label class="control-label col-sm-6" for="visitDate" th:text="#{addDoctorVisit.date}"></label>
                 <div class="input-group registration-date-time">
                     <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span>
                     <input class="form-control" name="visitDate" id="visitDate" type="date">
@@ -15,15 +15,15 @@
                     <span class="input-group-btn">
                     </span>
                 </div>
-                <input name="officeNumber" id="officeNumber" class="form-control" placeholder="Numer gabinetu"/>
+                <input name="officeNumber" id="officeNumber" class="form-control" th:placeholder="#{addDoctorVisit.roomNr}"/>
             </div>
         </div>
         <div class="row mt-2">
             <div class="col-6">
-                <a th:href="@{/main}" class="btn btn-secondary">Anuluj</a>
+                <a th:href="@{/main}" class="btn btn-secondary" th:text="#{editVisit.cancel}"></a>
             </div>
             <div class="col-6">
-                <input type="submit" class="btn btn-dark" value="Zatwierdź"/>
+                <input type="submit" class="btn btn-dark" th:value="#{editVisit.ok}"/>
             </div>
         </div>
     </form>

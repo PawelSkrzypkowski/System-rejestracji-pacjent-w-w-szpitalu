@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Lekarz</title>
+    <title th:text="#{index.title}"></title>
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" media="screen" th:href="@{/css/style.css}"/>
@@ -48,7 +48,7 @@
                                     <th>
                                         <table class="table table-hover" id="dev-table-monday" style="width: 100%;">
                                             <tr>
-                                                <th width="70%">Poniedzialek</th>
+                                                <th width="70%" th:text="#{schedule.1}"></th>
                                                 <th width="30%"></th>
                                             </tr>
                                             <tr th:each="visit: ${visits}" th:object="${visit}">
@@ -69,7 +69,7 @@
                                     <th>
                                         <table class="table table-hover" id="dev-table-tuesday">
                                             <tr>
-                                                <th width="70%">Wtorek</th>
+                                                <th width="70%" th:text="#{schedule.2}"></th>
                                                 <th width="30%"></th>
                                             </tr>
                                             <tr th:each="visit: ${visits}" th:object="${visit}">
@@ -90,7 +90,7 @@
                                     <th>
                                         <table class="table table-hover" id="dev-table-wednesday">
                                             <tr>
-                                                <th width="70%">Środa</th>
+                                                <th width="70%" th:text="#{schedule.3}"></th>
                                                 <th width="30%"></th>
                                             </tr>
                                             <tr th:each="visit: ${visits}" th:object="${visit}">
@@ -111,7 +111,7 @@
                                     <th>
                                         <table class="table table-hover" id="dev-table-thursday">
                                             <tr>
-                                                <th width="70%">Czwartek</th>
+                                                <th width="70%" th:text="#{schedule.4}"></th>
                                                 <th width="30%"></th>
                                             </tr>
                                             <tr th:each="visit: ${visits}" th:object="${visit}">
@@ -132,7 +132,7 @@
                                     <th>
                                         <table class="table table-hover" id="dev-table-friday">
                                             <tr>
-                                                <th width="70%">Piątek</th>
+                                                <th width="70%" th:text="#{schedule.5}"></th>
                                                 <th width="30%"></th>
                                             </tr>
                                             <tr th:each="visit: ${visits}" th:object="${visit}">

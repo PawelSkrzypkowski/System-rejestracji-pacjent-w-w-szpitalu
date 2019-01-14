@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Wizyty</title>
+    <title th:text="#{userVisits.title}"></title>
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/visit.js}"></script>
@@ -19,7 +19,7 @@
 <nav th:replace="header :: header">
 </nav>
 
-<h3 style="text-align:center">Przyszle wizyty</h3>
+<h3 style="text-align:center" th:text="#{userVisits.header}"></h3>
 <hr>
 <div class="container">
     <div class="row">
@@ -27,9 +27,9 @@
             <div class="panel panel-default">
                 <table class="table table-hover" id="dev-table">
                     <tr>
-                        <th>Imię i Nazwisko lekarza</th>
-                        <th>Data</th>
-                        <th>Anuluj wizytę</th>
+                        <th th:text="#{userVisits.doctorName}"></th>
+                        <th th:text="#{userVisits.date}"></th>
+                        <th th:text="#{userVisits.cancel}"></th>
                     </tr>
                     <tr th:each="future: ${futureVisits}" th:object="${future}">
                         <td  th:text="${future.doctorName}"></td>
@@ -44,7 +44,7 @@
 </div>
 
 <hr>
-<h3 style="text-align:center">Historia wizyt</h3>
+<h3 style="text-align:center" th:text="#{userVisits.headerHistory}"></h3>
 <hr>
 <div class="container">
     <div class="row">
@@ -52,9 +52,9 @@
             <div class="panel panel-default">
                 <table class="table table-hover" id="dev-table-historical">
                     <tr>
-                        <th>Imię i Nazwisko lekarza</th>
-                        <th>Data</th>
-                        <th>Szczegóły</th>
+                        <th th:text="#{userVisits.doctorName}"></th>
+                        <th th:text="#{userVisits.date}"></th>
+                        <th th:text="#{userVisits.details}"></th>
                     </tr>
                     <tr th:each="historical: ${historicalVisits}" th:object="${historical}">
                         <td  th:text="${historical.doctorName}"></td>
@@ -74,18 +74,18 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLongTitle" style="text-align:center">Czy odwolac wizyte ?</h3>
+                <h3 class="modal-title" id="exampleModalLongTitle" style="text-align:center" th:text="#{userVisits.removeVisit}"></h3>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="id" readonly />
-                <h5>Data: </h5>
+                <h5 th:text="#{userVisits.removeVisit.date}"></h5>
                 <h4 class="modal-date" id="modalDate"></h4>
-                <h5>Lekarz: </h5>
+                <h5 th:text="#{userVisits.removeVisit.doctor}"></h5>
                 <h4 class="modal-doctor" id="modalDoctor"></h4>
             </div>
             <div class="modal-footer">
-                <a class="btn icon-btn btn-primary" data-dismiss="modal"><span class="glyphicon btn-glyphicon glyphicon glyphicon-arrow-left img-circle text-success"></span>Anuluj</a>
-                <a class="btn icon-btn btn-success" id="btnYes" onclick="setHref()"><span class="glyphicon btn-glyphicon glyphicon glyphicon-remove img-circle text-success"></span>Odwolaj wizyte</a>
+                <a class="btn icon-btn btn-primary" data-dismiss="modal"><span class="glyphicon btn-glyphicon glyphicon glyphicon-arrow-left img-circle text-success"></span>[[#{userVisits.removeVisit.cancel}]]</a>
+                <a class="btn icon-btn btn-success" id="btnYes" onclick="setHref()"><span class="glyphicon btn-glyphicon glyphicon glyphicon-remove img-circle text-success"></span>[[#{userVisits.removeVisit.remove}]]</a>
             </div>
         </div>
     </div>

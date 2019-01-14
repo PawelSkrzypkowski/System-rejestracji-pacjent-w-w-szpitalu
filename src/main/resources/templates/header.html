@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>System rejestracji pacjentów w szpitalu</title>
+    <title th:text="#{index.title}"></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="header">
-    <a class="navbar-brand" href="/">System rejestracji pacjentów w szpitalu</a>
+    <a class="navbar-brand" href="/" th:text="#{index.title}"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -17,37 +17,36 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="nav navbar-nav">
             <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/registerPersonnel}" class="nav-item nav-link"
-               href="#">Rejestracja personelu</a>
+               href="#" th:text="#{header.menu.1}"></a>
         </div>
         <div class="nav navbar-nav">
-            <a sec:authorize="hasAnyRole('DOCTOR', 'ROLE_NURSE')" th:href="@{/card/}" class="nav-item nav-link" href="#">Wyszukiwanie
-                pacjenta</a>
+            <a sec:authorize="hasAnyRole('DOCTOR', 'ROLE_NURSE')" th:href="@{/card/}" class="nav-item nav-link" href="#" th:text="#{header.menu.2}"></a>
         </div>
         <div class="nav navbar-nav">
-            <a sec:authorize="hasRole('DOCTOR')" th:href="@{/doctor/patientList}" class="nav-item nav-link" href="#">Wykaz pacjentów</a>
+            <a sec:authorize="hasRole('DOCTOR')" th:href="@{/doctor/patientList}" class="nav-item nav-link" href="#" th:text="#{header.menu.3}"></a>
         </div>
         <div class="nav navbar-nav">
-            <a sec:authorize="hasRole('DOCTOR')" th:href="@{/addVisit}" class="nav-item nav-link" href="#">Dodaj wizytę</a>
+            <a sec:authorize="hasRole('DOCTOR')" th:href="@{/addVisit}" class="nav-item nav-link" href="#" th:text="#{header.menu.4}"></a>
         </div>
         <div class="nav navbar-nav">
-            <a sec:authorize="hasRole('DOCTOR')" th:href="@{/doctor/visits}" class="nav-item nav-link" href="#">Terminarz</a>
+            <a sec:authorize="hasRole('DOCTOR')" th:href="@{/doctor/visits}" class="nav-item nav-link" href="#" th:text="#{header.menu.5}"></a>
         </div>
         <div class="nav navbar-nav">
-            <a sec:authorize="hasRole('USER')" th:href="@{/staff}" class="nav-item nav-link" href="#">Personel</a>
+            <a sec:authorize="hasRole('USER')" th:href="@{/staff}" class="nav-item nav-link" href="#" th:text="#{header.menu.6}"></a>
         </div>
         <div class="nav navbar-nav">
-            <a sec:authorize="hasRole('USER')" th:href="@{/visits}" class="nav-item nav-link" href="#">Wizyty</a>
+            <a sec:authorize="hasRole('USER')" th:href="@{/visits}" class="nav-item nav-link" href="#" th:text="#{header.menu.7}"></a>
         </div>
 
         <ul sec:authorize="isAuthenticated()" class="nav navbar-nav navbar-right">
-            <a th:href="@{/logout}" class="nav-item nav-link">Wyloguj się</a>
+            <a th:href="@{/logout}" class="nav-item nav-link" th:text="#{header.menu.8}"></a>
         </ul>
         <div class="navbar-nav">
-            <a sec:authorize="!isAuthenticated()" th:href="@{/register}" class="nav-item nav-link">Rejestracja
+            <a sec:authorize="!isAuthenticated()" th:href="@{/register}" class="nav-item nav-link">[[#{header.menu.9}]]
                 <span
                         class="sr-only">(current)</span></a>
             <a sec:authorize="!isAuthenticated()" id="loginPage" class="nav-item nav-link"
-               th:href="@{/login}">Logowanie</a>
+               th:href="@{/login}"> th:text="#{header.menu.10}"</a>
         </div>
 
 

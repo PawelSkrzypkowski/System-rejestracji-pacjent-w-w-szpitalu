@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>System rejestracji pacjentów w szpitalu</title>
+    <title th:text="#{index.title}"></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -13,7 +13,7 @@
 
 <div class="container mt-4 offset-2 col-8">
     <div class="row">
-        Rejestracja powiodła się. <a th:href="@{/login}">Kliknij, aby przejść na stronę logowania.</a>
+        [[#{registerDoctor.success.1}]]<a th:href="@{/login}">[[#{registerDoctor.success.2}]]</a>
     </div>
 </div>
 
