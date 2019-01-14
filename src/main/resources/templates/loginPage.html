@@ -50,6 +50,16 @@
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
+<script>
+    $.ajax({
+        type: "GET",
+        url: "http://api.wunderground.com/api/7533263ef31f677a/conditions/q/poland/Warsaw.json",
+        context: this,
+        success: function (data) {
+            $('#weatherNav').text("Temperatura: " + data.current_observation.temp_c + "\u00b0")
+        }
+    })
+</script>
 <footer th:replace="footer :: footer">
 
 </footer>

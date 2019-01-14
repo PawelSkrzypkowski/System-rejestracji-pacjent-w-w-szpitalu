@@ -46,7 +46,10 @@
                 <span
                         class="sr-only">(current)</span></a>
             <a sec:authorize="!isAuthenticated()" id="loginPage" class="nav-item nav-link"
-               th:href="@{/login}"> th:text="#{header.menu.10}"</a>
+               th:href="@{/login}" th:text="#{header.menu.10}"></a>
+        </div>
+        <div class="navbar-nav">
+            <a id="weatherNav" class="nav-item nav-link"></a>
         </div>
 
 
