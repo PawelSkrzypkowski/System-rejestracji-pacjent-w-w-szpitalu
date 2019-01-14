@@ -1,31 +1,5 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <title>System rejestracji pacjentów w szpitalu</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-</head>
-<body>
 
-<nav th:replace="header :: header">
-</nav>
-
-
-<div class="container mt-4 offset-2 col-8">
-    <div class="row">
+<div class="row">
         Użytkownik o podanym loginie już istnieje. <a href="#" onclick="history.back()">Kliknij, aby wrócić do
         formularza rejestracji.</a>
-    </div>
 </div>
-
-<script th:src="@{/js/jquery.min.js}"></script>
-<script th:src="@{/js/popper.min.js}"></script>
-<script th:src="@{/js/bootstrap.min.js}"></script>
-
-<footer th:replace="footer :: footer">
-
-</footer>
-</body>
-</html>

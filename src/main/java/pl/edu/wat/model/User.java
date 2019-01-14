@@ -31,7 +31,6 @@ public class User {
     @NotEmpty
     private String fullname;
 
-    @NotEmpty
     private String email;
 
     @NotEmpty

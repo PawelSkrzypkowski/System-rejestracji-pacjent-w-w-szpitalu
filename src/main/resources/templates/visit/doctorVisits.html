@@ -32,8 +32,8 @@
                         <td th:text="*{officeNumber}"></td>
                         <div th:if="${visit.busyVisit}==false">
                             <td>Wolna</td>
-                            <td><a th:href="@{/doctor/removeVisit(id=*{id})}"><span
-                                    class='fa fa-trash'></span></a></td>
+                            <td><button th:data="*{id}" class="removeVisit"><span
+                                    class='fa fa-trash'></span></button></td>
                         </div>
                         <div th:unless="${visit.busyVisit}==false">
                             <td>Zarezerwowana</td>
@@ -46,6 +46,19 @@
         </div>
     </div>
 </div>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script>
+    $('.removeVisit').on('click', function () {
+        var id = $(this).attr('data');
+        $.ajax({
+            type: "GET",
+            url: "/doctor/removeVisit?id=" + id,
+            success: function (data) {
+                $('body').html(data);
+            }
+        });
+    });
+</script>
 
 <footer th:replace="footer :: footer">
 

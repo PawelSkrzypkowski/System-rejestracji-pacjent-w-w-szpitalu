@@ -184,8 +184,6 @@ public class PatientCardController {
 
         model.addAttribute("patientId", patientId);
 
-        System.out.println("/card/patientAdmission/ POST");
-
         return "patientCard/patientAdmission";
     }
 

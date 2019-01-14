@@ -16,7 +16,7 @@
 </div>
 
 <div class="container mt-4 offset-2 col-8">
-    <form th:action="@{/card/}" method="post">
+    <form id="patientFindForm" th:action="@{/card/}" method="post">
         <fieldset>
 
             <div class="form-group">
@@ -38,6 +38,21 @@
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
+<script>
+    $(document).on('submit','#patientFindForm', function (e) {
+        e.preventDefault();
+        var el = $(this);
+        $.ajax({
+            type: el.attr('method'),
+            url: el.attr('action'),
+            data: el.serialize(),
+            context: this,
+            success: function (data) {
+                $('html').html(data);
+            }
+        })
+    })
+</script>
 
 <footer th:replace="footer :: footer">
 

@@ -1,20 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Dodaj wizytę</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-</head>
-<body>
-
-<nav th:replace="header :: header">
-</nav>
-
-
-<div class="container mt-4 offset-2 col-8">
-    <form id="addVisit" action="#" method="post" th:action="@{/addVisit/}">
+<form id="addVisit" action="#" method="post" th:action="@{/addVisit/}">
         <div class="row">
             <div class="col-6">
                     <div class="alert alert-danger">
@@ -41,17 +27,4 @@
             </div>
         </div>
     </form>
-
-</div>
-
-<script th:src="@{/js/jquery.min.js}"></script>
-<script th:src="@{/js/popper.min.js}"></script>
-<script th:src="@{/js/bootstrap.min.js}"></script>
-<script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
-<script src="http://momentjs.com/downloads/moment-timezone-with-data.js"></script>
-
-<footer th:replace="footer :: footer">
-
-</footer>
-</body>
 </html>
