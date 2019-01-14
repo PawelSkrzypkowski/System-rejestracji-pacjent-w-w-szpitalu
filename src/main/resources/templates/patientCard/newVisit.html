@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Dodaj wizytę</title>
+    <title th:text="#{newVisit.title}"></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -17,7 +17,7 @@
     <form id="newVisit" action="#" method="post" th:action="@{/card/newVisitAdded/__${patientId}__}">
         <div class="row">
             <div class="col-6">
-                <label class="control-label col-sm-6" for="visitDate">Data wizyty :</label>
+                <label class="control-label col-sm-6" for="visitDate" th:text="#{newVisit.date}"></label>
                 <div class="input-group registration-date-time">
                     <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-calendar"
                                                                             aria-hidden="true"></span></span>
@@ -28,17 +28,17 @@
                     <span class="input-group-btn">
                     </span>
                 </div>
-                <input name="officeNumber" id="officeNumber" class="form-control" placeholder="Numer gabinetu"
+                <input name="officeNumber" id="officeNumber" class="form-control" th:placeholder="#{newVisit.roomNr}"
                        required="required" type="number"/>
-                <input name="description" id="description" class="form-control" placeholder="Opis wizyty"/>
+                <input name="description" id="description" class="form-control" th:placeholder="#{newVisit.desc}"/>
             </div>
         </div>
         <div class="row mt-2">
             <div class="col-6">
-                <a th:href="@{/card/__${patientId}__}" class="btn btn-secondary">Anuluj</a>
+                <a th:href="@{/card/__${patientId}__}" class="btn btn-secondary" th:text="#{editVisit.cancel}"></a>
             </div>
             <div class="col-6">
-                <input type="submit" class="btn btn-dark" value="Zatwierdź"/>
+                <input type="submit" class="btn btn-dark" th:value="#{editVisit.ok}"/>
             </div>
         </div>
     </form>

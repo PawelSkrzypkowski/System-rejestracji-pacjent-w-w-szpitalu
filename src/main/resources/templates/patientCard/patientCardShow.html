@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
 >
 <head>
-    <title>System rejestracji pacjentów w szpitalu</title>
+    <title th:text="#{index.title}"></title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
@@ -12,14 +12,14 @@
 </nav>
 
 <div class="container mt-4 offset-2 col-8">
-    <h1>Karta Pacjenta</h1>
+    <h1 th:text="#{patientCard.header}"></h1>
 </div>
 <div class="container mt-4 offset-2 col-8">
     <div class="row">
         <table class="table" th:object="${user}">
             <tr>
                 <th>
-                    Imię i nazwisko
+                    [[#{patientCard.name}]]
                 </th>
                 <th>
                     <td th:text="${user.fullname}"/>
@@ -27,14 +27,14 @@
 
 
                 <th>
-                    Województwo
+                    [[#{patientCard.province}]]
                 </th>
                 <th>
                     <td th:text="${user.getProvince()}"/>
                 </th>
                 <tr>
                     <th>
-                        PESEL
+                        [[#{patientCardFind.pesel}]]
                     </th>
                     <th>
                         <td th:text="${user.pesel}"/>
@@ -42,7 +42,7 @@
 
 
                     <th>
-                        Miasto
+                        [[#{patientCard.city}]]
                     </th>
                     <th>
                         <td th:text="${user.address.city}"/>
@@ -50,14 +50,14 @@
                 </tr>
                 <tr>
                     <th>
-                        Numer telefonu
+                        [[#{patientCard.phone}]]
                     </th>
                     <th>
                         <td th:text="${user.phone}"/>
                     </th>
 
                     <th>
-                        Ulica
+                        [[#{patientCard.street}]]
                     </th>
                     <th>
                         <td th:text="${user.address.street}"/>
@@ -67,14 +67,14 @@
                 </tr>
                 <tr>
                     <th>
-                        Email
+                        [[#{patientCard.email}]]
                     </th>
                     <th>
                         <td th:text="${user.email}"/>
                     </th>
 
                     <th>
-                        Numer domu
+                        [[#{patientCard.home}]]
                     </th>
                     <th>
                         <td th:text="${user.address.houseNumber}"/>
@@ -84,14 +84,14 @@
                 </tr>
                 <tr>
                     <th>
-                        Lekarz prowadzący
+                        [[#{patientCard.doctor}]]
                     </th>
                     <th>
                         <td th:text="${user.doctorFullname}"/>
                     </th>
 
                     <th>
-                        Numer mieszkania
+                        [[#{patientCard.homeNr}]]
                     </th>
                     <th>
                         <td th:text="${user.address.flatNumber}"/>
@@ -105,14 +105,14 @@
 </div>
 
 <div class="container mt-4 offset-2 col-8">
-    <h4>Wizyty</h4>
+    <h4 th:text="#{patientCard.visits}"></h4>
     <div class="row">
         <table class="table" th:object="${user}">
             <tr>
-                <th>LP.</th>
-                <th>Data</th>
-                <th>Opis</th>
-                <th>Lekarz</th>
+                <th th:text="#{patientCard.visits.lp}"></th>
+                <th th:text="#{patientCard.visits.date}"></th>
+                <th th:text="#{patientCard.visits.desc}"></th>
+                <th th:text="#{patientCard.visits.doctor}"></th>
             </tr>
             <tr th:each="visit, iterStat : ${visits}">
                 <form id="editVisit" action="#" method="post"
@@ -122,7 +122,7 @@
                     <td th:text="${visit.visitDescription}"></td>
                     <td th:text="${visit.doctorName}"></td>
                     <td><input sec:authotize="hasAnyRole('ROLE_DOCTOR')" type="submit"
-                               class="btn btn-dark" value="Edytuj Wizytę"/></td>
+                               class="btn btn-dark" th:value="#{patientCard.visits.edit}"/></td>
                 </form>
             </tr>
         </table>
@@ -131,16 +131,16 @@
 
 <div class="container mt-4 offset-2 col-8">
     <input id="addVisitButton" th:data="${patientId}" sec:authotize="hasAnyRole('ROLE_DOCTOR')" type="button"
-           class="btn btn-dark" value="Dodaj wizytę"/>
+           class="btn btn-dark" th:value="#{patientCard.addVisit}"/>
 </div>
 
 <div class="container mt-4 offset-2 col-8">
-    <h4>Lista przebytych chorób</h4>
+    <h4 th:text="#{patientCard.diseases.title}"></h4>
     <div class="row">
         <table class="table" th:object="${user}">
             <tr>
-                <th>Lp.</th>
-                <th>Nazwa</th>
+                <th th:text="#{patientCard.diseases.lp}"></th>
+                <th th:text="#{patientCard.diseases.name}"></th>
             </tr>
             <tr th:each="disease, iterStat : ${diseases}">
                 <td th:text="${iterStat.count}"></td>
@@ -152,12 +152,12 @@
 
 <div class="container mt-4 offset-2 col-8" sec:authorize="hasAnyRole('ROLE_NURSE')"
      th:if="${!buttonTextExamination.isEmpty()}">
-    <h4>Lista badań</h4>
+    <h4 th:text="#{patientCard.examinations.title}"></h4>
     <div class="row">
         <table class="table" th:object="${user}">
             <tr>
-                <th>Lp.</th>
-                <th>Nazwa</th>
+                <th th:text="#{patientCard.examinations.lp}"></th>
+                <th th:text="#{patientCard.examinations.name}"></th>
             </tr>
             <tr th:each="examination, iterStat : ${examinations}">
                 <td th:text="${iterStat.count}"></td>
@@ -171,7 +171,7 @@
     <div>
         <div class="container mt-4 offset-2 col-8">
             <input sec:authotize="hasAnyRole('ROLE_DOCTOR')" type="submit"
-                   class="btn btn-dark" value="Dodaj chorobę"/>
+                   class="btn btn-dark" th:value="#{patientCard.addDisease}"/>
         </div>
     </div>
 </form>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Dodaj wizytę</title>
+    <title th:text="#{editVisit.title}"></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -19,23 +19,23 @@
         <div>
             <h3>Data: </h3>
             <h3 th:text="${visit.getVisitDate()}"></h3>
-            <h4>Numer gabinetu</h4>
+            <h4 th:text="#{editVisit.roomNr}"></h4>
             <h5 th:text="${visit.getOfficeNumber()}"></h5>
         </div>
 
         <div class="row">
             <div class="col-6">
-                <input name="description" id="description" class="form-control" placeholder="Opis wizyty"
+                <input name="description" id="description" class="form-control" th:placeholder="#{editVisit.desc}"
                        autofocus="autofocus"
                        th:value="${visit.description}"/>
             </div>
         </div>
         <div class="row mt-2">
             <div class="col-6">
-                <a th:href="@{/card/__${patientId}__}" class="btn btn-secondary">Anuluj</a>
+                <a th:href="@{/card/__${patientId}__}" class="btn btn-secondary" th:text="#{editVisit.cancel}"></a>
             </div>
             <div class="col-6">
-                <input type="submit" class="btn btn-dark" value="Zatwierdź"/>
+                <input type="submit" class="btn btn-dark" th:value="#{editVisit.ok}"/>
             </div>
         </div>
     </form>

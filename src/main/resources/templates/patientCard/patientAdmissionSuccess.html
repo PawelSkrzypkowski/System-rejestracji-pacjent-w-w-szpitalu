@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Dodaj wizytę</title>
+    <title th:text="#{index.title}"></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -12,7 +12,7 @@
 <nav th:replace="header :: header">
 </nav>
 
-<h1>Sukces</h1>
+<h1 th:text="#{patientAdmission.success}"></h1>
 
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
