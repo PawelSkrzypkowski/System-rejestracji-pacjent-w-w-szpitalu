@@ -50,6 +50,21 @@
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
 <script src="http://momentjs.com/downloads/moment-timezone-with-data.js"></script>
+<script>
+    $(document).on('submit','#newVisit', function (e) {
+        e.preventDefault();
+        var el = $(this);
+        $.ajax({
+            type: el.attr('method'),
+            url: el.attr('action'),
+            data: el.serialize(),
+            context: this,
+            success: function (data) {
+                $('body').html(data);
+            }
+        })
+    })
+</script>
 
 <footer th:replace="footer :: footer">
 

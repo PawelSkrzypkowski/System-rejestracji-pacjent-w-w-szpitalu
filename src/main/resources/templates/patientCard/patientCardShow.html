@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
 >
 <head>
     <title>System rejestracji pacjentów w szpitalu</title>
@@ -129,14 +129,10 @@
     </div>
 </div>
 
-<form id="newVisit" action="#" method="get" th:action="@{/card/newVisit/__${patientId}__}">
-    <div>
-        <div class="container mt-4 offset-2 col-8">
-            <input sec:authotize="hasAnyRole('ROLE_DOCTOR')" type="submit"
-                   class="btn btn-dark" value="Dodaj wizytę"/>
-        </div>
-    </div>
-</form>
+<div class="container mt-4 offset-2 col-8">
+    <input id="addVisitButton" th:data="${patientId}" sec:authotize="hasAnyRole('ROLE_DOCTOR')" type="button"
+           class="btn btn-dark" value="Dodaj wizytę"/>
+</div>
 
 <div class="container mt-4 offset-2 col-8">
     <h4>Lista przebytych chorób</h4>
@@ -209,6 +205,18 @@
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
+<script>
+    $(document).on('click', '#addVisitButton', function () {
+        var patientId = $(this).attr('data');
+        $.ajax({
+            type: "GET",
+            url: "/card/newVisit/" + patientId,
+            success: function (data) {
+                $('body').html(data);
+            }
+        })
+    });
+</script>
 
 <footer th:replace="footer :: footer">
 
