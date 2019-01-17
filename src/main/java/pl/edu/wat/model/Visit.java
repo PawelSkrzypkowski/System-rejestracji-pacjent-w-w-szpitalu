@@ -28,13 +28,16 @@ public class Visit implements Comparable<Visit>{
 
     private int officeNumber;
 
+    private Boolean patientAlerted;
+
 
     @Builder
-    public Visit(String description, LocalDateTime visitDate, boolean busyVisit, int officeNumber) {
+    public Visit(String description, LocalDateTime visitDate, boolean busyVisit, int officeNumber, Boolean patientAlerted) {
         this.description = description;
         this.visitDate = visitDate;
         this.busyVisit = busyVisit;
         this.officeNumber = officeNumber;
+        this.patientAlerted = patientAlerted;
     }
 
     @Override
